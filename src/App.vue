@@ -1,43 +1,48 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import AppNavbar from './components/AppNavbar.vue'
+import AppNavbar from './components/layout/AppNavbar.vue'
+import AppFooter from './components/layout/AppFooter.vue'
+import BreakpointMonitor from './components/layout/BreakpointMonitor.vue'
 </script>
 
 <template>
   <div class="app-container">
+    <!-- Navbar fixa e responsiva com menu hambúrguer para mobile -->
     <AppNavbar />
 
-    <main class="main-content">
+    <!-- Área de Conteúdo Principal -->
+    <main class="main-content" id="main-content">
       <RouterView />
     </main>
 
-    <footer class="app-footer">
-      <div class="footer-inner">
-        <p>Projeto de Responsividade — Guia Interativo em Vue 3 (Esqueleto de Seções)</p>
-        <p class="footer-sub">Fontes utilizadas: <strong>Poppins</strong> & <strong>Iterian / Inter</strong> | Pronto para deploy na Vercel</p>
-      </div>
-    </footer>
+    <!-- Rodapé semântico e responsivo -->
+    <AppFooter />
+
+    <!-- LAB03: Monitor de Breakpoint Fixo em Tempo Real -->
+    <BreakpointMonitor />
   </div>
 </template>
 
 <style scoped>
-.app-footer {
-  background-color: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  padding: var(--spacing-lg) 0;
-  margin-top: auto;
-  text-align: center;
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
 }
 
-.footer-inner {
-  width: 1024px;
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 76rem;
   margin: 0 auto;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  padding: var(--spacing-lg) var(--spacing-md);
 }
 
-.footer-sub {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-size-xs);
+@media (min-width: 48rem) {
+  .main-content {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
 }
 </style>

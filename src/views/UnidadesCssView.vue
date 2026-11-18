@@ -11,69 +11,190 @@ const sources = [
     title: 'web.dev — As novas unidades de viewport (dvh, lvh, svh)',
     url: 'https://web.dev/blog/viewport-units',
     note: 'Resolução de barras dinâmicas em navegadores mobile'
+  },
+  {
+    title: 'W3C CSS Values and Units Module Level 4',
+    url: 'https://www.w3.org/TR/css-values-4/',
+    note: 'Especificação técnica internacional'
   }
 ]
+
+const prevRoute = {
+  path: '/por-que-responsividade-importa',
+  title: 'Módulo 1: Introdução'
+}
+
+const nextRoute = {
+  path: '/flexbox-grid',
+  title: 'Módulo 3: Flexbox & Grid'
+}
 </script>
 
 <template>
   <SectionBlock
     section-number="2"
-    title="Unidades CSS: Absolutas e Relativas"
-    subtitle="Domine rem, em, %, fr, vw, vh, dvh e ch para construir páginas adaptáveis e acessíveis."
-    guide-question="Uma pessoa com baixa visão aumenta o tamanho da fonte nas configurações do navegador. O texto definido em px continua do mesmo tamanho, e o definido em rem aumenta. Por que essa diferença acontece?"
-    guide-answer="O pixel (px) é uma unidade de medida absoluta na web: quando você define font-size: 16px, você está fixando uma quantidade exata de pontos na tela e forçando o navegador a ignorar a preferência de acessibilidade do usuário. Já o 'rem' (root em) é uma unidade relativa ao elemento raiz (html). Por padrão, 1rem equivale ao tamanho de fonte configurado pelo usuário (geralmente 16px). Se o usuário vai nas configurações do sistema ou navegador e ajusta a fonte padrão para 24px, 1rem passa a valer 24px automaticamente, escalando todo o site e garantindo a inclusão de quem tem baixa visão."
+    theme-subtitle="Vice City • Módulo 2"
+    title="CSS Units: Unidades CSS"
+    subtitle="Domine o uso estratégico de px, rem, em, %, fr, vw, vh, dvh e ch para construir interfaces escaláveis e acessíveis."
+    guide-question="Por que textos definidos em rem podem aumentar quando o usuário modifica o tamanho da fonte do navegador, enquanto textos definidos em px podem permanecer visualmente inalterados?"
+    guide-answer="O pixel (px) é uma unidade de medida absoluta na web: quando definimos font-size: 16px, travamos uma quantidade exata de pontos de hardware na tela e instruímos o navegador a ignorar qualquer preferência de acessibilidade configurada pelo usuário. Já o 'rem' (root em) é uma unidade estritamente relativa ao tamanho da fonte do elemento raiz (&lt;html&gt;). Por padrão nos navegadores, 1rem equivale ao tamanho de fonte escolhido pelo usuário (comumente 16px). Se um usuário com baixa visão ajusta a fonte padrão do seu sistema operacional ou navegador para 24px, 1rem passa a valer 24px automaticamente, escalando harmoniosamente todos os textos do site."
     :sources="sources"
+    :prev-route="prevRoute"
+    :next-route="nextRoute"
   >
     <template #explanation>
       <p>
-        No CSS, dividimos as unidades em dois grandes grupos:
+        No ecossistema de CSS, a escolha das unidades de medida determina se a sua interface será rígida ou flexível.
+        Dividimos as unidades em dois grandes grupos:
       </p>
-      <ul style="margin: 0.75rem 0 0.75rem 1.5rem;">
-        <li><strong>Absolutas (ex: <code>px</code>):</strong> Têm sempre o mesmo tamanho fixo, independentemente do tamanho da tela ou das preferências do usuário.</li>
-        <li><strong>Relativas:</strong> Seu tamanho é calculado em relação a outro elemento ou à janela de exibição:
-          <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
-            <li><code>rem</code>: Relativo à fonte do elemento raiz (<code>&lt;html&gt;</code>). Ideal para tipografia, paddings e margens acessíveis.</li>
-            <li><code>em</code>: Relativo ao tamanho da fonte do próprio elemento pai. Útil em componentes isolados ou botões proporcionais.</li>
-            <li><code>%</code>: Relativo à dimensão correspondente do contêiner pai.</li>
-            <li><code>fr</code>: Fração do espaço livre (usado exclusivamente no CSS Grid).</li>
-            <li><code>vw / vh</code>: Porcentagem da largura (viewport width) ou altura total da janela.</li>
-            <li><code>dvh</code>: Dynamic Viewport Height — altura dinâmica que se ajusta quando a barra de endereços do celular sobe ou desce!</li>
-            <li><code>ch</code>: Largura do caractere "0" da fonte atual. Perfeito para definir largura máxima de leitura confortável em textos (ex: <code>max-width: 65ch;</code>).</li>
+
+      <div class="units-grid">
+        <div class="unit-group-card">
+          <h4 class="card-group-title">1. Unidades Absolutas</h4>
+          <p class="unit-desc">
+            Possuem valor fixo independente da resolução da tela ou das configurações do sistema.
+          </p>
+          <div class="unit-item">
+            <code>px</code>: Pixel de CSS. Útil para bordas ultrafinas (ex: <code>1px solid ...</code>) ou sombras sutis, mas desaconselhado para tamanhos de texto e espaçamentos estruturais de acessibilidade.
+          </div>
+        </div>
+
+        <div class="unit-group-card">
+          <h4 class="card-group-title">2. Unidades Relativas (Recomendadas)</h4>
+          <p class="unit-desc">
+            Calculadas dinamicamente com base em outro elemento ou na viewport.
+          </p>
+          <ul class="unit-list">
+            <li><code>rem</code>: Relativo ao tamanho da fonte da raiz (<code>&lt;html&gt;</code>). É o padrão ouro para tipografia, paddings e margens.</li>
+            <li><code>em</code>: Relativo ao tamanho da fonte do elemento pai imediato. Excelente para botões que precisam ter ícones e paddings proporcionais ao texto do botão.</li>
+            <li><code>%</code>: Porcentagem relativa à dimensão correspondente do contêiner pai.</li>
+            <li><code>fr</code>: Fração do espaço livre disponível em um CSS Grid Container.</li>
+            <li><code>vw / vh</code>: 1% da largura (viewport width) ou altura (viewport height) visível do navegador.</li>
+            <li><code>dvh</code>: <em>Dynamic Viewport Height</em>. Altura dinâmica de viewport que se adapta automaticamente quando a barra de endereços do celular aparece ou se recolhe durante a rolagem.</li>
+            <li><code>ch</code>: Largura do caractere "0" da fonte aplicada. Perfeita para determinar comprimentos de linha de leitura confortáveis (ex: <code>max-width: 65ch;</code>).</li>
           </ul>
-        </li>
-      </ul>
+        </div>
+      </div>
     </template>
 
     <template #code>
-      <pre class="code-block"><code>/* Exemplo de uso consciente das unidades */
+      <pre class="code-block"><code>/* Aplicação prática e acessível de unidades */
 :root {
-  /* 1rem = 16px por padrão, mas acompanha a preferência do usuário */
-  --font-base: 1rem;
+  /* 1rem = 16px por padrão, mas respeita a escala de acessibilidade */
+  --spacing-base: 1rem;
 }
 
-body {
-  font-size: var(--font-base);
+/* Tipografia e espaçamento acessível com rem */
+h1 {
+  font-size: 2rem;      /* 32px se base for 16px; 48px se o usuário usar base 24px */
+  margin-bottom: 1rem;
 }
 
-.artigo-leitura {
-  /* Largura ideal para leitura confortável de olhos humanos (cerca de 65 caracteres) */
-  max-width: 65ch;
-  margin: 0 auto;
-  padding: 1.5rem; /* 24px proporcionais */
+/* Limite ergonômico de caracteres por linha com ch */
+.artigo-conteudo {
+  max-width: 65ch;     /* Entre 45 e 75 caracteres por linha para leitura ideal */
+  margin-inline: auto;
+  padding: 1.5rem;
 }
 
-.hero-tela-cheia {
-  /* dvh evita que a barra do Safari/Chrome no celular corte o botão inferior */
-  min-height: 100dvh;
+/* Altura de tela cheia sem quebras no mobile com dvh */
+.hero-banner {
+  min-height: 100dvh;   /* Nunca é cortado pela barra de URL do Safari/Chrome no celular */
   display: flex;
   align-items: center;
+}
+
+/* Botão proporcional e autônomo com em */
+.btn-tag {
+  font-size: 0.875rem;
+  padding: 0.5em 1em;   /* O padding se ajusta proporcionalmente se a fonte do botão mudar */
 }</code></pre>
     </template>
 
     <template #answer-extra>
-      <div style="margin-top: 0.75rem; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-        <strong>Dica de Ouro:</strong> Para acessibilidade profissional, use <code>rem</code> para fontes e espaçamentos estruturais, e evite travar fontes em <code>px</code>.
+      <div class="tip-card">
+        <span class="tip-badge">Acessibilidade na Prática (WCAG)</span>
+        <p>
+          Nunca fixe o corpo do texto em <code>px</code> (como <code>font-size: 16px</code>). Ao utilizar <code>rem</code>, você respeita pessoas que precisam de fontes maiores por questões de saúde ocular, cumprindo os critérios internacionais de acessibilidade web.
+        </p>
       </div>
     </template>
   </SectionBlock>
 </template>
+
+<style scoped>
+.units-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+@media (min-width: 48rem) {
+  .units-grid {
+    grid-template-columns: 1fr 1.6fr;
+  }
+}
+
+.unit-group-card {
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.card-group-title {
+  color: var(--color-accent);
+  font-size: var(--font-size-base);
+  margin-bottom: 0.25rem;
+}
+
+.unit-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.unit-item {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.unit-list {
+  padding-left: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.tip-card {
+  margin-top: var(--spacing-md);
+  background: rgba(54, 217, 232, 0.08);
+  border: 1px solid rgba(54, 217, 232, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.tip-badge {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.tip-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+</style>

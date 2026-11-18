@@ -11,57 +11,114 @@ const sources = [
     title: 'web.dev — Noções básicas de viewport responsivo',
     url: 'https://web.dev/responsive-web-design-basics/',
     note: 'Explicação detalhada sobre a tag meta viewport'
+  },
+  {
+    title: 'W3C — CSS Media Queries Level 4',
+    url: 'https://www.w3.org/TR/mediaqueries-4/',
+    note: 'Especificação técnica oficial sobre consultas de mídia e breakpoints'
   }
 ]
+
+const nextRoute = {
+  path: '/unidades-css',
+  title: 'Módulo 2: Unidades CSS'
+}
 </script>
 
 <template>
   <SectionBlock
     section-number="1"
-    title="Por que responsividade importa"
-    subtitle="A base para criar páginas que funcionam e se adaptam com qualidade a qualquer tela."
-    guide-question="Um site tem media queries bem escritas, mas não tem a meta tag viewport. No celular, ele aparece como a versão de computador, só que minúscula. Por que isso acontece, e o que a meta viewport muda?"
-    guide-answer="Sem a meta tag viewport, os navegadores móveis (como o Safari no iOS ou o Chrome no Android) assumem por padrão que o site foi feito apenas para computadores antigos. Para evitar que o layout quebre, eles renderizam a página em uma tela virtual de cerca de 980 pixels e 'encolhem' tudo com zoom-out para caber na tela física. As media queries, ao consultarem o tamanho da janela, veem os 980px em vez da tela real e nunca são disparadas. A meta viewport corrige isso informando: 'use a largura real da tela do aparelho (width=device-width) e uma proporção de 1 para 1 (initial-scale=1.0)'."
+    theme-subtitle="Vice City • Módulo 1"
+    title="Welcome to Vice City: Introdução à Responsividade"
+    subtitle="A base essencial para construir interfaces fluidas que se adaptam com maestria a smartphones, tablets e desktops."
+    guide-question="Um site possui media queries perfeitamente configuradas, mas não apresenta a meta tag viewport no HTML. Por que ele aparece como uma versão miniaturizada da página de computador quando aberto em dispositivos móveis, e o que a viewport muda?"
+    guide-answer="Sem a meta tag viewport, os navegadores móveis modernos (como o Safari no iOS ou o Chrome no Android) adotam um comportamento legado: para evitar que sites antigos quebrem, eles renderizam a página em uma 'tela virtual' de cerca de 980 pixels de largura e aplicam um zoom-out geral para encolher tudo e caber na tela física do aparelho. Como as media queries consultam essa viewport virtual de 980px em vez da largura física real, as regras para mobile nunca são ativadas. A meta tag viewport (&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;) instrui o navegador a usar a largura real do dispositivo em escala 1:1, disparando os breakpoints corretamente."
     :sources="sources"
+    :next-route="nextRoute"
   >
     <template #explanation>
       <p>
-        Imagine que a internet não é acessada apenas em um monitor de mesa de 24 polegadas: as pessoas usam smartphones,
-        tablets, relógios inteligentes, notebooks e televisores.
+        No universo do desenvolvimento web moderno, os usuários acessam suas aplicações a partir de uma imensa variedade de telas:
+        smartphones compactos, tablets na vertical ou horizontal, notebooks, telas ultrawide e televisores.
       </p>
       <p style="margin-top: 0.75rem;">
-        <strong>Design Responsivo</strong> significa construir o layout do site de forma flexível, para que textos,
-        botões e imagens se reorganizem naturalmente no espaço disponível, sem exigir que o usuário dê zoom ou role a
-        página para os lados horizontalmente.
+        <strong>Design Responsivo</strong> é a metodologia de design e código onde o layout responde ativamente ao ambiente do usuário.
+        Em vez de criar versões separadas do mesmo site (como os antigos subdomínios <code>m.site.com</code>), utilizamos um único código HTML
+        e estilos CSS que reorganizam textos, imagens e menus dinamicamente.
       </p>
+      <p style="margin-top: 0.75rem;">
+        Os pilares fundamentais são:
+      </p>
+      <ul style="margin: 0.5rem 0 0.5rem 1.5rem; line-height: 1.8;">
+        <li><strong>Meta Tag Viewport:</strong> Informa as proporções e escala reais da tela física ao navegador.</li>
+        <li><strong>Grids Fluidos:</strong> Contêineres que utilizam porcentagens e unidades relativas em vez de larguras fixas em pixels.</li>
+        <li><strong>Media Queries Mobile-First:</strong> Regras CSS aplicadas com <code>@media (min-width: ...)</code> para enriquecer o layout progressivamente para telas maiores.</li>
+      </ul>
     </template>
 
     <template #code>
-      <pre class="code-block"><code>&lt;!-- 1. No &lt;head&gt; do index.html: ESSENCIAL para qualquer site responsivo --&gt;
+      <pre class="code-block"><code>&lt;!-- 1. No &lt;head&gt; do index.html: REGRA MANDATÓRIA para qualquer página responsiva --&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
 
-&lt;!-- 2. No arquivo CSS: Mobile-First básico com media query --&gt;
+&lt;!-- 2. No arquivo CSS: Abordagem Mobile-First com Media Query --&gt;
 &lt;style&gt;
-  /* Estilo base (fora da media query): pensado para telas menores primeiro */
+  /* Estilo base: escrito para celulares (telas menores) primeiro */
   .container {
     width: 100%;
-    padding: 1rem;
+    padding: 1rem; /* 16px */
+    margin: 0 auto;
   }
 
-  /* Quando a tela tiver no mínimo 768px (tablets e computadores), aplicamos ajustes */
-  @media (min-width: 768px) {
+  /* Breakpoint para telas maiores: quando a largura tiver no mínimo 48rem (768px) */
+  @media (min-width: 48rem) {
     .container {
-      max-width: 720px;
-      margin: 0 auto;
+      max-width: 45rem; /* 720px */
+    }
+  }
+
+  /* Breakpoint para desktops amplos: no mínimo 64rem (1024px) */
+  @media (min-width: 64rem) {
+    .container {
+      max-width: 72rem; /* 1152px */
     }
   }
 &lt;/style&gt;</code></pre>
     </template>
 
     <template #answer-extra>
-      <div style="margin-top: 0.75rem; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-        <strong>Resumo em 1 frase:</strong> A meta tag viewport é a chave que liga o dispositivo real ao motor de regras de estilo do CSS.
+      <div class="tip-card">
+        <span class="tip-badge">Regra de Ouro</span>
+        <p>
+          A meta tag viewport é a "ponte" entre a tela física de vidro do celular e o motor de renderização do CSS. Sem ela, o dispositivo se comporta como um monitor de computador em miniatura.
+        </p>
       </div>
     </template>
   </SectionBlock>
 </template>
+
+<style scoped>
+.tip-card {
+  margin-top: var(--spacing-md);
+  background: rgba(255, 79, 163, 0.08);
+  border: 1px solid rgba(255, 79, 163, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.tip-badge {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.tip-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+</style>

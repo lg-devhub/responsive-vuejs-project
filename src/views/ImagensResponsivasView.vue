@@ -11,70 +11,186 @@ const sources = [
     title: 'MDN Web Docs — Imagens responsivas e elemento picture',
     url: 'https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Responsive_Design/Responsive_images',
     note: 'Uso de srcset, sizes e aspect-ratio moderno'
+  },
+  {
+    title: 'web.dev — Largest Contentful Paint (LCP) e otimização de imagens hero',
+    url: 'https://web.dev/lcp/',
+    note: 'Por que imagens no topo da página nunca devem ter loading lazy'
   }
 ]
+
+const prevRoute = {
+  path: '/flexbox-grid',
+  title: 'Módulo 3: Flexbox & Grid'
+}
+
+const nextRoute = {
+  path: '/boas-praticas-vue',
+  title: 'Módulo 5: Boas Práticas Vue'
+}
 </script>
 
 <template>
   <SectionBlock
     section-number="4"
-    title="Imagens Responsivas e Performance"
-    subtitle="max-width, dimensões HTML, aspect-ratio, lazy loading consciente e prevenção de CLS."
-    guide-question="Ao abrir uma página, o texto aparece primeiro. Quando a imagem termina de carregar, ela empurra o texto para baixo. Por que isso acontece quando a imagem não tem width e height no HTML? Qual métrica do Google mede esse problema?"
-    guide-answer="Isso acontece porque, sem os atributos 'width' e 'height' explícitos no HTML (ou sem a propriedade CSS 'aspect-ratio'), o navegador não sabe antecipadamente qual é a proporção e o tamanho que a imagem terá. Durante o carregamento inicial do HTML, o navegador reserva 0px de altura para a imagem ainda não baixada. Quando o arquivo da imagem finalmente chega pela rede, o navegador descobre suas dimensões reais e é obrigado a recalcular o layout da página (reflow), empurrando bruscamente os textos que já estavam visíveis. A métrica do Google Core Web Vitals que mede e penaliza esses saltos visuais na página chama-se CLS (Cumulative Layout Shift)."
+    theme-subtitle="Vice City • Módulo 4"
+    title="Visual Experience: Imagens Responsivas"
+    subtitle="max-width, dimensões HTML, aspect-ratio, loading consciente e prevenção de saltos de layout (CLS)."
+    guide-question="Por que uma imagem sem os atributos width e height pode deslocar o conteúdo da página durante seu carregamento? Qual métrica do Google mede esse comportamento?"
+    guide-answer="Sem os atributos 'width' e 'height' explícitos no HTML (ou sem a propriedade CSS 'aspect-ratio'), o navegador não consegue calcular previamente o espaço e a proporção que a imagem ocupará antes de baixá-la por completo. Durante o parse inicial da página, o navegador aloca provisoriamente 0px de altura para a imagem em download. No instante em que o arquivo da imagem finalmente chega pela rede, o navegador descobre suas dimensões reais e é forçado a recalcular o layout (reflow), empurrando bruscamente para baixo os textos que o usuário já estava lendo. A métrica do Google Core Web Vitals que mede e penaliza esses deslocamentos visuais inesperados é o CLS (Cumulative Layout Shift)."
     :sources="sources"
+    :prev-route="prevRoute"
+    :next-route="nextRoute"
   >
     <template #explanation>
       <p>
-        Imagens mal configuradas são as maiores vilãs da lentidão e da má experiência em páginas web.
-        Para torná-las responsivas e eficientes, seguimos algumas regras de ouro:
+        Em interfaces ricas visualmente — especialmente inspiradas no estilo cinematográfico de Vice City —, o tratamento inadequado de imagens é o principal causador de lentidão e frustração do usuário.
       </p>
-      <ul style="margin: 0.75rem 0 0.75rem 1.5rem;">
-        <li>
-          <strong><code>max-width: 100%</code> e <code>height: auto</code>:</strong> Garante que a imagem nunca ultrapasse a largura do contêiner onde está inserida, redimensionando proporcionalmente.
-        </li>
-        <li>
-          <strong>Atributos <code>width</code> e <code>height</code> no HTML:</strong> Não servem para fixar o tamanho em pixels estáticos, mas sim para informar ao navegador a <em>proporção de aspecto (aspect-ratio)</em> antes do download terminar, reservando o espaço em branco exato e evitando o "salto" de conteúdo (CLS).
-        </li>
-        <li>
-          <strong><code>loading="lazy"</code>:</strong> Adia o download de imagens que estão fora da tela inicial (abaixo da dobra). <em>Atenção:</em> <strong>NÃO</strong> use lazy loading na imagem principal de destaque do topo (imagem LCP), pois isso atrasaria desnecessariamente a primeira impressão visual da página!
-        </li>
-        <li>
-          <strong><code>object-fit: cover</code>:</strong> Recorta e preenche o espaço sem distorcer nem achatar a imagem.
-        </li>
-        <li>
-          <strong><code>srcset</code> e <code>&lt;picture&gt;</code>:</strong> Permite enviar imagens menores e mais leves para celulares e versões de alta resolução apenas para telas retina/computador.
-        </li>
-      </ul>
+      <p style="margin-top: 0.75rem;">
+        Para garantir imagens verdadeiramente responsivas e alta performance, seguimos 5 princípios técnicos:
+      </p>
+
+      <div class="image-rules-list">
+        <div class="rule-card">
+          <span class="rule-badge">Regra 1</span>
+          <h4>Fluidez Básica com <code>max-width: 100%</code> e <code>height: auto</code></h4>
+          <p>
+            Impede que a imagem transborde a largura do seu contêiner pai, redimensionando sua altura proporcionalmente para não achatar ou distorcer a imagem.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-badge">Regra 2</span>
+          <h4>Dimensões HTML para Zerar o CLS</h4>
+          <p>
+            Inserir <code>width="800" height="600"</code> no HTML <strong>não</strong> engessa o tamanho em pixels se você tiver <code>max-width: 100%</code> no CSS. Serve para o navegador calcular o <code>aspect-ratio (800/600 = 4/3)</code> e reservar o espaço exato na tela antes do download!
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-badge">Regra 3</span>
+          <h4>Uso Consciente do <code>loading="lazy"</code></h4>
+          <p>
+            Adia o carregamento de imagens que estão abaixo da dobra (fora do campo de visão inicial). <strong>Aviso crítico:</strong> NUNCA aplique <code>loading="lazy"</code> na imagem de destaque do topo da página (imagem LCP), pois isso atrasaria a renderização inicial perceptível.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-badge">Regra 4</span>
+          <h4>Enquadramento com <code>object-fit: cover</code></h4>
+          <p>
+            Permite que imagens em cards preencham caixas de proporção fixa (ex: banners de 16/9) sem distorcer o aspecto original dos pixels.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-badge">Regra 5</span>
+          <h4>Resoluções sob Medida com <code>srcset</code> e <code>sizes</code></h4>
+          <p>
+            Permite que o navegador do celular baixe uma versão leve de 400px de largura, enquanto uma tela 4K de computador baixa a versão de 1600px.
+          </p>
+        </div>
+      </div>
     </template>
 
     <template #code>
-      <pre class="code-block"><code>&lt;!-- Imagem responsiva recomendada (com proporção reservada e lazy loading) --&gt;
+      <pre class="code-block"><code>&lt;!-- Padrão Ouro da Web: Imagem Fluida, Proporção Reservada e Alta Performance --&gt;
 &lt;img
-  src="/foto-800.webp"
-  srcset="/foto-400.webp 400w, /foto-800.webp 800w, /foto-1200.webp 1200w"
-  sizes="(max-width: 600px) 100vw, 800px"
+  src="/images/vice-city-hero-800.webp"
+  srcset="
+    /images/vice-city-hero-400.webp 400w,
+    /images/vice-city-hero-800.webp 800w,
+    /images/vice-city-hero-1200.webp 1200w
+  "
+  sizes="(max-width: 48rem) 100vw, 800px"
   width="800"
-  height="600"
+  height="450"
   loading="lazy"
-  alt="Exemplo ilustrativo de imagem responsiva"
-  class="img-fluida"
+  alt="Vista panorâmica noturna com luzes neon de Vice City"
+  class="responsive-media"
 /&gt;
 
 &lt;style&gt;
-  .img-fluida {
+  .responsive-media {
     max-width: 100%;
     height: auto;
     object-fit: cover;
     border-radius: var(--radius-md);
+    aspect-ratio: 16 / 9; /* Garante a reserva espacial mesmo sem atributos no HTML */
   }
 &lt;/style&gt;</code></pre>
     </template>
 
     <template #answer-extra>
-      <div style="margin-top: 0.75rem; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-        <strong>Dica prática:</strong> Sempre defina <code>width="..." height="..."</code> diretamente no HTML da tag <code>&lt;img&gt;</code> ou adicione <code>aspect-ratio: 16 / 9;</code> no CSS. O navegador moderno cuida do restante para você zerar seu CLS.
+      <div class="tip-card">
+        <span class="tip-badge">Impacto no Google Core Web Vitals</span>
+        <p>
+          O Google penaliza fortemente páginas com <strong>CLS (Cumulative Layout Shift) &gt; 0.1</strong>. Manter <code>width</code> e <code>height</code> no HTML é a solução mais simples e eficaz para manter o CLS zerado (pontuação 0.0).
+        </p>
       </div>
     </template>
   </SectionBlock>
 </template>
+
+<style scoped>
+.image-rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.rule-card {
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rule-badge {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.rule-card h4 {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+}
+
+.rule-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.tip-card {
+  margin-top: var(--spacing-md);
+  background: rgba(255, 79, 163, 0.08);
+  border: 1px solid rgba(255, 79, 163, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.tip-badge {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.tip-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+</style>
