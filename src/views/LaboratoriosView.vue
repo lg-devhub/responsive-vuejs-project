@@ -1,367 +1,361 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useLabsStore } from '../stores/labsStore'
+import ResponsiveContainerLab from '../components/labs/ResponsiveContainerLab.vue'
+import UnitConverterLab from '../components/labs/UnitConverterLab.vue'
+import BreakpointMonitorLab from '../components/labs/BreakpointMonitorLab.vue'
 
-// --- Lab 1: Controle Deslizante de Largura de Contêiner ---
-const larguraContainer = ref(600)
+const labsStore = useLabsStore()
 
-// --- Lab 2: Conversor de Unidades CSS ---
-const valorEntrada = ref(1.5)
-const unidadeSelecionada = ref('rem')
-const tamanhoBaseRem = ref(16) // 1rem = 16px padrão
+// Controle de abas para navegação focada ou visão panorâmica
+const abaAtiva = ref('todos') // 'todos', 'lab01', 'lab02', 'lab03'
 
-const valorCalculadoEmPx = computed(() => {
-  const val = Number(valorEntrada.value) || 0
-  if (unidadeSelecionada.value === 'rem') {
-    return (val * tamanhoBaseRem.value).toFixed(1)
-  }
-  if (unidadeSelecionada.value === 'em') {
-    // Considerando contexto direto do elemento pai
-    return (val * tamanhoBaseRem.value).toFixed(1)
-  }
-  if (unidadeSelecionada.value === '%') {
-    // Exemplo relativo a uma largura de referência de 400px
-    return ((val / 100) * 400).toFixed(1)
-  }
-  return 0
-})
-
-// --- Lab 3: Indicador de Largura de Janela e Breakpoint ---
-const larguraJanela = ref(typeof window !== 'undefined' ? window.innerWidth : 1024)
-
-const breakpointAtivo = computed(() => {
-  if (larguraJanela.value < 640) return { nome: 'Mobile (Pequeno)', classe: 'tag-mobile' }
-  if (larguraJanela.value < 1024) return { nome: 'Tablet (Médio)', classe: 'tag-tablet' }
-  return { nome: 'Desktop (Grande)', classe: 'tag-desktop' }
-})
-
-const atualizarLargura = () => {
-  larguraJanela.value = window.innerWidth
+const definirAba = (aba) => {
+  abaAtiva.value = aba
 }
-
-onMounted(() => {
-  window.addEventListener('resize', atualizarLargura)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', atualizarLargura)
-})
 </script>
 
 <template>
-  <div class="labs-view">
-    <header class="labs-header">
-      <span class="labs-tag">Demonstrações Práticas</span>
-      <h1>Laboratórios Interativos</h1>
-      <p>
-        Pequenas demonstrações interativas onde você mexe nos controles e observa os conceitos de responsividade e CSS acontecendo em tempo real.
+  <div class="laboratorios-page">
+    <!-- Cabeçalho da Página com Temática Vice City -->
+    <header class="page-header">
+      <div class="header-badge-row">
+        <span class="page-badge">🌴 MÓDULO PRÁTICO • LABORATÓRIOS VIRTUAIS</span>
+        <span class="badge-status">Pinia Store Reativa</span>
+      </div>
+
+      <h1 class="page-title">
+        Laboratórios Interativos de Responsividade
+      </h1>
+
+      <p class="page-subtitle">
+        Espaço de experimentação prática e verificação empírica. Teste o comportamento do CSS Grid sem media queries,
+        calibre unidades relativas com contextos de referência reais e acompanhe os breakpoints do navegador em tempo real.
       </p>
+
+      <!-- Barra de Ações Rápidas e Filtro por Aba -->
+      <div class="labs-nav-bar">
+        <div class="tabs-group" role="tablist" aria-label="Navegar entre laboratórios">
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="abaAtiva === 'todos'"
+            class="tab-btn"
+            :class="{ active: abaAtiva === 'todos' }"
+            @click="definirAba('todos')"
+          >
+            📋 Todos os Labs
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="abaAtiva === 'lab01'"
+            class="tab-btn"
+            :class="{ active: abaAtiva === 'lab01' }"
+            @click="definirAba('lab01')"
+          >
+            LAB01 • Container & Grid
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="abaAtiva === 'lab02'"
+            class="tab-btn"
+            :class="{ active: abaAtiva === 'lab02' }"
+            @click="definirAba('lab02')"
+          >
+            LAB02 • Conversor CSS
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="abaAtiva === 'lab03'"
+            class="tab-btn"
+            :class="{ active: abaAtiva === 'lab03' }"
+            @click="definirAba('lab03')"
+          >
+            LAB03 • Breakpoint Monitor
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="global-reset-btn"
+          title="Restaurar todos os laboratórios para os valores padrão"
+          @click="labsStore.resetAllLabs"
+        >
+          ↺ Reset Geral
+        </button>
+      </div>
     </header>
 
-    <!-- Laboratório 1 -->
-    <section class="lab-card">
-      <div class="lab-badge">Laboratório 1</div>
-      <h2>Controle Deslizante: Largura de Contêiner & Grid</h2>
-      <p class="lab-desc">
-        Arraste a barra para mudar a largura do contêiner abaixo e observe a fórmula <code>repeat(auto-fit, minmax(14rem, 1fr))</code> reposicionar os cards automaticamente:
-      </p>
-
-      <div class="slider-control">
-        <label for="slider-largura">Largura do Contêiner: <strong>{{ larguraContainer }}px</strong></label>
-        <input
-          id="slider-largura"
-          v-model.number="larguraContainer"
-          type="range"
-          min="300"
-          max="800"
-          step="10"
-          class="range-input"
-        />
+    <!-- Área de Conteúdo dos Laboratórios -->
+    <main class="labs-content">
+      <!-- LAB01: Responsive Container -->
+      <div v-show="abaAtiva === 'todos' || abaAtiva === 'lab01'" class="lab-wrapper">
+        <ResponsiveContainerLab />
       </div>
 
-      <div class="preview-area">
-        <div class="container-dinamico" :style="{ width: larguraContainer + 'px' }">
-          <div class="grid-demonstracao">
-            <div class="card-demo">Card A (min 14rem)</div>
-            <div class="card-demo">Card B (min 14rem)</div>
-            <div class="card-demo">Card C (min 14rem)</div>
-          </div>
+      <!-- LAB02: CSS Unit Converter -->
+      <div v-show="abaAtiva === 'todos' || abaAtiva === 'lab02'" class="lab-wrapper">
+        <UnitConverterLab />
+      </div>
+
+      <!-- LAB03: Breakpoint Monitor -->
+      <div v-show="abaAtiva === 'todos' || abaAtiva === 'lab03'" class="lab-wrapper">
+        <BreakpointMonitorLab />
+      </div>
+    </main>
+
+    <!-- Rodapé de Navegação do Guia -->
+    <footer class="labs-footer-nav">
+      <div class="nav-card-footer">
+        <div class="nav-text">
+          <h3>Pronto para testar seus conhecimentos?</h3>
+          <p>
+            Agora que você experimentou as quebras de colunas e unidades nos laboratórios, resolva o desafio final
+            calculando a quebra para 3 colunas!
+          </p>
+        </div>
+        <div class="nav-actions">
+          <RouterLink to="/flexbox-grid" class="secondary-link">
+            ← Revisar Seção 3 (Flexbox & Grid)
+          </RouterLink>
+          <RouterLink to="/desafio" class="btn btn-primary">
+            Acessar o Desafio Final →
+          </RouterLink>
         </div>
       </div>
-      <p class="legenda-lab">
-        Dica: lembre-se da Seção 3! Com 14rem (224px) por card + 1rem (16px) de gap, a 2ª coluna surge aos <strong>464px</strong>!
-      </p>
-    </section>
-
-    <!-- Laboratório 2 -->
-    <section class="lab-card">
-      <div class="lab-badge">Laboratório 2</div>
-      <h2>Conversor Interativo de Unidades CSS</h2>
-      <p class="lab-desc">
-        Converta valores em <code>rem</code>, <code>em</code> ou <code>%</code> diretamente para pixels (px) baseando-se no padrão de 1rem = 16px:
-      </p>
-
-      <div class="converter-grid">
-        <div class="input-field">
-          <label>Valor:</label>
-          <input v-model.number="valorEntrada" type="number" step="0.1" class="input-text" />
-        </div>
-
-        <div class="input-field">
-          <label>Unidade:</label>
-          <select v-model="unidadeSelecionada" class="select-unit">
-            <option value="rem">rem (relativo à raiz)</option>
-            <option value="em">em (relativo ao pai)</option>
-            <option value="%">% (porcentagem)</option>
-          </select>
-        </div>
-
-        <div class="result-box">
-          <span class="result-label">Resultado Equivalente:</span>
-          <span class="result-value">{{ valorCalculadoEmPx }} px</span>
-          <small v-if="unidadeSelecionada === '%'" class="result-note">(baseado em contêiner de 400px)</small>
-          <small v-else class="result-note">(baseado em fonte raiz de 16px)</small>
-        </div>
-      </div>
-    </section>
-
-    <!-- Laboratório 3 -->
-    <section class="lab-card">
-      <div class="lab-badge">Laboratório 3</div>
-      <h2>Indicador de Janela e Breakpoints</h2>
-      <p class="lab-desc">
-        Este componente monitora o tamanho em tempo real da tela do seu navegador e indica qual breakpoint estaria ativo:
-      </p>
-
-      <div class="indicator-box">
-        <div class="indicator-metric">
-          <span class="metric-label">Largura atual da janela:</span>
-          <span class="metric-number">{{ larguraJanela }} px</span>
-        </div>
-
-        <div class="indicator-metric">
-          <span class="metric-label">Breakpoint ativo detectado:</span>
-          <span :class="['badge-breakpoint', breakpointAtivo.classe]">
-            {{ breakpointAtivo.nome }}
-          </span>
-        </div>
-      </div>
-      <p class="legenda-lab">
-        Experimente redimensionar a janela do seu navegador para ver o valor e o rótulo mudarem dinamicamente.
-      </p>
-    </section>
+    </footer>
   </div>
 </template>
 
 <style scoped>
-.labs-header {
+.laboratorios-page {
+  width: 100%;
+}
+
+/* Cabeçalho */
+.page-header {
   margin-bottom: var(--spacing-xl);
 }
 
-.labs-tag {
+.header-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.page-badge {
   display: inline-block;
-  background-color: #ecfdf5;
-  color: #065f46;
+  background: rgba(255, 79, 163, 0.15);
+  color: var(--color-primary);
+  border: 1px solid rgba(255, 79, 163, 0.4);
   font-size: var(--font-size-xs);
   font-weight: 700;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--spacing-xs);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.labs-header h1 {
+.badge-status {
+  display: inline-block;
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.page-title {
   font-size: var(--font-size-3xl);
-  margin-bottom: var(--spacing-xs);
-}
-
-.labs-header p {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-}
-
-.lab-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-.lab-badge {
-  display: inline-block;
-  background-color: #e0e7ff;
-  color: #3730a3;
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--spacing-xs);
-}
-
-.lab-desc {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  margin: var(--spacing-xs) 0 var(--spacing-md) 0;
-}
-
-/* Lab 1 Styles */
-.slider-control {
-  margin-bottom: var(--spacing-md);
-}
-
-.slider-control label {
-  display: block;
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-xs);
-}
-
-.range-input {
-  width: 100%;
-  max-width: 400px;
-}
-
-.preview-area {
-  background-color: #f1f5f9;
-  border: 2px dashed #cbd5e1;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  overflow-x: auto;
-}
-
-.container-dinamico {
-  background: #ffffff;
-  border: 1px solid #94a3b8;
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-sm);
-  transition: width 0.15s ease-out;
-  margin: 0 auto;
-}
-
-.grid-demonstracao {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1rem;
-}
-
-.card-demo {
-  background-color: #dbeafe;
-  color: #1e40af;
-  border: 1px solid #93c5fd;
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-md);
-  text-align: center;
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-}
-
-.legenda-lab {
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
-
-/* Lab 2 Styles */
-.converter-grid {
-  display: flex;
-  gap: var(--spacing-md);
-  align-items: flex-end;
-}
-
-.input-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.input-field label {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-}
-
-.input-text, .select-unit {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  outline: none;
-}
-
-.result-box {
-  background-color: #f0fdf4;
-  border: 1px solid #86efac;
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xs) var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-}
-
-.result-label {
-  font-size: var(--font-size-xs);
-  color: #166534;
-  font-weight: 600;
-}
-
-.result-value {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: #15803d;
-}
-
-.result-note {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
-
-/* Lab 3 Styles */
-.indicator-box {
-  display: flex;
-  gap: var(--spacing-xl);
-  background: #f8fafc;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-}
-
-.indicator-metric {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.metric-label {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
-
-.metric-number {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
   color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
 }
 
-.badge-breakpoint {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-md);
+@media (min-width: 48rem) {
+  .page-title {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.page-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  max-width: 54rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Barra de Abas e Ações Rápidas */
+.labs-nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+@media (min-width: 48rem) {
+  .labs-nav-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.tabs-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
   border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  background: var(--color-surface-light);
+  color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(54, 217, 232, 0.25);
   font-weight: 700;
-  font-size: var(--font-size-sm);
+}
+
+.global-reset-btn {
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
   width: fit-content;
 }
 
-.tag-mobile {
-  background-color: #fef3c7;
-  color: #92400e;
+.global-reset-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
-.tag-tablet {
-  background-color: #e0e7ff;
-  color: #3730a3;
+/* Conteúdo */
+.labs-content {
+  display: flex;
+  flex-direction: column;
 }
 
-.tag-desktop {
-  background-color: #dcfce7;
-  color: #166534;
+.lab-wrapper {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Rodapé dos Laboratórios */
+.labs-footer-nav {
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.nav-card-footer {
+  background: linear-gradient(135deg, rgba(28, 21, 48, 0.9) 0%, rgba(42, 32, 66, 0.7) 100%);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 48rem) {
+  .nav-card-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-xl);
+  }
+}
+
+.nav-text h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.nav-text p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  max-width: 38rem;
+}
+
+.nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+@media (min-width: 36rem) {
+  .nav-actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.secondary-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.secondary-link:hover {
+  color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-primary {
+  background: var(--gradient-sunset);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 79, 163, 0.4);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 79, 163, 0.6);
+  text-decoration: none;
 }
 </style>

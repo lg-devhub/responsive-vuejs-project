@@ -236,3 +236,28 @@ code {
   color: var(--color-secondary);
   border: 1px solid rgba(168, 85, 247, 0.3);
 }
+
+
+/* ========================================================
+   Acessibilidade Avançada (WCAG AA & RNF04)
+   ======================================================== */
+
+/* Foco Visível para Navegação por Teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 3px !important;
+}
+
+/* Respeito a Preferências de Redução de Movimento (Acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

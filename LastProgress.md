@@ -157,3 +157,197 @@
 
 ### Próximo Passo a Ser Executado:
 - **Passo 4 — Laboratórios Interativos e Gerenciamento Global via Pinia (LAB01 e LAB02)** (Store `labsStore.js`, componentes `ResponsiveContainerLab.vue` e `UnitConverterLab.vue`, e centralização em `LaboratoriosView.vue`).
+
+
+---
+
+## [2026-11-18] Execução do Passo 4: Laboratórios Interativos e Gerenciamento Global via Pinia (LAB01, LAB02 e LAB03)
+
+### O que foi feito:
+1. **Criação da Store Global dos Laboratórios (`src/stores/labsStore.js`):**
+   - Implementada store Pinia centralizada (`useLabsStore`) gerenciando o estado reativo dos laboratórios práticos.
+   - Estado e cálculos matemáticos para o **LAB01 (Responsive Container)**:
+     - `containerWidth` (reativo, com limites seguros entre 300px e 860px).
+     - Parâmetros base: `cardMinWidthRem = 14`, `gapRem = 1`, `baseFontSize = 16px`.
+     - Limiares exatos computados: `threshold2Cols = 464px` (2 × 224px + 16px) e `threshold3Cols = 704px` (3 × 224px + 32px).
+     - Identificação de colunas ativas (`currentColumns`) e `columnStatus` detalhado com fórmula, badges visuais neon e feedback explicativo instantâneo.
+   - Estado e cálculos contextuais para o **LAB02 (CSS Unit Converter)**:
+     - Suporte a 5 unidades CSS essenciais: `rem`, `em`, `%`, `vw` e `ch`.
+     - Contextos de referência dinâmicos configuráveis: `rootFontSize` (base da tag `<html>` para acessibilidade), `parentFontSize` (elemento pai para `em`), `containerRefWidth` (largura do bloco para `%`) e `viewportRefWidth` (largura da tela para `vw`).
+     - Cálculo em pixels preciso (`convertedPx`) sem conversões matematicamente enganosas.
+     - Explicação didática e contextual para cada unidade (`unitReferenceExplanation`).
+   - Ações de redefinição individual (`resetLab01`, `resetLab02`) e geral (`resetAllLabs`).
+
+2. **Desenvolvimento do Componente LAB01 (`src/components/labs/ResponsiveContainerLab.vue`):**
+   - Slider contínuo (`range input`) com indicador em pixels e rem.
+   - Marcadores visuais destacados na régua para os limiares críticos de 464px (2 colunas) e 704px (3 colunas).
+   - Botões de atalho/presets rápidos (Mobile 380px, Limiar 464px, Tablet 600px, Desktop 740px) e botão de reset.
+   - Callout reativo em tempo real (RF12) com badge de status, contagem de colunas e memória de cálculo.
+   - Palco de simulação com CSS Grid real `repeat(auto-fit, minmax(14rem, 1fr))` com `gap: 1rem`, exibindo cards temáticos de Vice City (Veículo, Propriedade, Aeronave, Marítimo).
+   - Memória de cálculo detalhada conectada à Seção 3 e ao Desafio Final.
+
+3. **Desenvolvimento do Componente LAB02 (`src/components/labs/UnitConverterLab.vue`):**
+   - Seletor de unidades em abas interativas com categorização (Acessível, Cascata, Fluido, Tela, Ergonômico).
+   - Entrada de valor estilizada com presets inteligentes customizados por unidade.
+   - Painel de ajuste dinâmico do contexto de referência (ex: demonstrando o efeito da alteração da fonte do navegador de 16px para 24px em usuários com baixa visão para provar o valor do `rem`).
+   - Card de resultado com destaque neon, valor em pixels e fórmula matemática aplicada.
+   - Caixa explicativa pedagógica do funcionamento de cada unidade.
+   - Barra comparativa visual com escala proporcional em tempo real.
+
+4. **Desenvolvimento do Componente LAB03 na Página (`src/components/labs/BreakpointMonitorLab.vue`):**
+   - Integração com a store do Pinia `viewportStore.js`.
+   - Painel com leitura em tempo real da largura e altura da viewport do navegador e conversão para rem e dvh.
+   - Tabela comparativa dos breakpoints oficiais da aplicação (Mobile < 640px, Tablet 640px-1023px, Desktop ≥ 1024px) com linha ativa destacada e código das media queries.
+   - Destaque conceitual da arquitetura mobile-first (CSS base para celular e expansão via `min-width`).
+
+5. **Refatoração da View Principal dos Laboratórios (`src/views/LaboratoriosView.vue`):**
+   - Eliminação completa de estilos legados em tema claro.
+   - Aplicação integral da identidade visual Vice City (fundo escuro `#100d1c`, acentos `#ff4fa3`, `#a855f7`, `#36d9e8`).
+   - Barra de navegação por abas ("Todos os Labs", "LAB01", "LAB02", "LAB03") e botão de Reset Geral.
+   - Rodapé de navegação conectando o aprendizado prático ao Desafio Final da aplicação.
+
+6. **Instalação de Dependências e Build de Produção:**
+   - Executado `npm install` (44 pacotes instalados com 0 vulnerabilidades).
+   - Executado `npm run build` com sucesso absoluto (69 módulos transformados em 1.96s, 0 erros e 0 warnings).
+
+### Arquivos Criados / Modificados:
+- `src/stores/labsStore.js` (Criado com Pinia)
+- `src/components/labs/ResponsiveContainerLab.vue` (Criado — LAB01)
+- `src/components/labs/UnitConverterLab.vue` (Criado — LAB02)
+- `src/components/labs/BreakpointMonitorLab.vue` (Criado — LAB03)
+- `src/views/LaboratoriosView.vue` (Refatorado para arquitetura modular em Vice City theme)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 5 — Integração com API Externa Dinâmica (Boletim Meteorológico de Vice City)** (Serviço `src/services/api.js` consumindo Open-Meteo Weather API para as coordenadas de Miami/Vice City, tratamento de loading, sucesso, erro, recarregamento e componente dinâmico).
+
+
+---
+
+## [2026-11-18] Execução do Passo 5: Integração com API Externa Dinâmica (Boletim Meteorológico de Vice City)
+
+### O que foi feito:
+1. **Criação do Serviço de API (`src/services/api.js`):**
+   - Implementada a função assíncrona `fetchViceCityWeather()` consumindo a API pública **Open-Meteo Weather API** para as coordenadas geográficas oficiais de Miami / Vice City (25.7617° N, -80.1918° W).
+   - Dados coletados em tempo real: temperatura do ar (`temperature_2m`), sensação térmica (`apparent_temperature`), umidade relativa (`relative_humidity_2m`), velocidade do vento (`wind_speed_10m`), código meteorológico WMO (`weather_code`) e indicador de dia/noite (`is_day`).
+   - Mapeamento completo dos códigos WMO para descrições em português, ícones expressivos e ambientação narrativa temática de Vice City (ex: "Água acumulando nas avenidas neon", "Céu aberto sobre Starfish Island").
+   - Tratamento com `AbortController` para timeout defensivo (8s) e formatação de erro amigável em caso de falha de conexão.
+   - Nenhuma chave secreta ou credencial exposta no frontend (endpoint 100% público, gratuito e compatível com Vercel).
+
+2. **Criação do Componente Dinâmico (`src/components/dynamic/ViceCityConditions.vue`):**
+   - Atendimento integral ao requisito RF10 (Consumo de API externa real e dinâmica).
+   - Tratamento robusto dos três estados de ciclo de vida assíncrono:
+     - **Loading (Carregando):** Esqueleto animado com pulso e efeito *shimmer* neon e mensagem de status da conexão via satélite.
+     - **Success (Sucesso):** Banner com temperatura grande em tipografia monospace, ícone dinâmico, badge de período (Dia Tropical vs. Noite Neon) e grid de cartões responsivos (`repeat(auto-fit, minmax(11rem, 1fr))`) exibindo sensação térmica, umidade, velocidade do vento e status online do satélite.
+     - **Error (Erro):** Card temático com alerta visual, mensagem técnica explicativa e botão "Tentar Reconectar Agora".
+   - Botão de atualização manual com animação de giro no ícone e indicação do horário da última medição coletada.
+
+3. **Integração na Página Inicial (`src/views/HomeView.vue`):**
+   - Refatorada a `HomeView.vue` com estética Vice City (fundo escuro, títulos em gradiente sunset e cards fluidos mobile-first com `repeat(auto-fit, minmax(...))`).
+   - Inserido o componente `ViceCityConditions.vue` com destaque logo após o banner hero principal, provando a reatividade e o consumo assíncrono de dados externos imediatamente na entrada do usuário.
+
+4. **Verificação Técnica e Testes de Execução:**
+   - Teste de chamada direta via Node.js executado com sucesso retornando status `success: true` com medições reais de Miami.
+   - Build de produção (`npm run build`) concluído com código de saída 0 (72 módulos transformados em 2.93s, 0 erros).
+
+### Arquivos Criados / Modificados:
+- `src/services/api.js` (Criado — serviço de integração com Open-Meteo)
+- `src/components/dynamic/ViceCityConditions.vue` (Criado — componente meteorológico em tempo real)
+- `src/views/HomeView.vue` (Atualizado com integração da API e grid mobile-first)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 6 — Página Inicial Imersiva e Desafio Final (Final Mission)** (Refinar a finalização das páginas, garantir que o formulário de resposta em `src/views/DesafioView.vue` valide com precisão os 608px com feedback dinâmico e vincule todos os conceitos ensinados no guia).
+
+
+---
+
+## [2026-11-18] Execução do Passo 6: Página Inicial Imersiva e Desafio Final (Final Mission)
+
+### O que foi feito:
+1. **Consolidação e Refatoração da Página Inicial (`src/views/HomeView.vue`):**
+   - Hero banner com ambientação Vice City, gradiente *sunset*, badges temáticas e sinalizador de conclusão da missão.
+   - Adicionada a seção **"Metodologia Pedagógica do Guia (Os 4 Pilares Fundamentais do ERS)"**, documentando os quatro componentes obrigatórios de cada módulo:
+     1. Explicação curta e acessível para alunos do 1º semestre;
+     2. Exemplo de código comentado e funcional;
+     3. Pergunta-guia oficial respondida com rigor técnico;
+     4. Referências e documentações oficiais (MDN, web.dev, W3C).
+   - Grade completa dos módulos educacionais (Módulos 1 a 6) com indicação de progresso e badge de conclusão sincronizado via Pinia (`challengeCompleted`).
+   - Seção panorâmica dos 3 laboratórios práticos (LAB01, LAB02, LAB03) com cartões de acesso direto e visualização dos objetivos experimentais.
+
+2. **Implementação Completa do Desafio Final (`src/views/DesafioView.vue`):**
+   - Atendimento integral ao requisito **RF11** (Página final de Desafio com pergunta autoral fundamentada nos conceitos do guia).
+   - Enunciado temático envolvente (vitrine de veículos em Ocean Drive) com regras claras: `repeat(auto-fit, minmax(12rem, 1fr))`, `gap: 1rem`, base de `1rem = 16px`.
+   - Campo interativo para inserção de resposta em pixels com suporte a múltiplos formatos (`608`, `608px`, `608 px`).
+   - Sistema inteligente de feedback em tempo real (RF12) com diagnósticos educativos para erros comuns:
+     - 576px: alerta sobre o esquecimento dos 2 gaps (32px);
+     - 464px: alerta que 464px correspondia à Seção 3 (2 cards de 14rem);
+     - 624px: alerta sobre a consideração incorreta de 3 gaps em vez de 2;
+     - Outros valores: dicas contextuais de cálculo.
+   - Ao acertar (**608px**):
+     - Banner comemorativo temático *"MISSION PASSED! RESPEITO + 🏆"*;
+     - Memória de cálculo detalhada em 4 passos:
+       `12rem × 16px = 192px` por card;
+       `3 × 192px = 576px` para 3 cards;
+       `2 × 16px = 32px` para os 2 gaps intermediários;
+       `576px + 32px = 608px` para o limiar exato!
+     - Simulação visual da prova real: contêiner com 608px renderizando os 3 cards perfeitamente alinhados lado a lado;
+   - Painel retrátil de dicas explicando a fórmula matemática geral `(N × card_px) + ((N - 1) × gap_px)`.
+   - Botões de navegação rápida para a Seção 3 e para o LAB01.
+
+3. **Gerenciamento de Estado do Desafio no Pinia (`src/stores/labsStore.js`):**
+   - Adicionados os estados `challengeAnswer`, `challengeCompleted` e `challengeAttempts`.
+   - Ações `registerChallengeAttempt`, `resetChallenge` e integração no `resetAllLabs`.
+
+4. **Verificação Técnica e Build de Produção:**
+   - Executado `npm run build` com sucesso absoluto (72 módulos compilados em 1.91s, 0 erros e 0 warnings).
+
+### Arquivos Criados / Modificados:
+- `src/stores/labsStore.js` (Adicionado estado reativo do Desafio Final)
+- `src/views/DesafioView.vue` (Implementado desafio interativo, validação 608px e memória de cálculo)
+- `src/views/HomeView.vue` (Adicionada metodologia de 4 pilares, grade de laboratórios e sincronização Pinia)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 7 — Validação Mobile-First, Acessibilidade, Otimização e Build de Produção** (Auditoria de responsividade em 320px, 375px, 768px e 1024px+, revisão de contrastes WCAG AA, acessibilidade de teclado, atualização do README.md e homologação final do projeto).
+
+
+---
+
+## [2026-11-18] Execução do Passo 7: Validação Mobile-First, Acessibilidade, Otimização e Build de Produção
+
+### O que foi feito:
+1. **Auditoria de Responsividade Mobile-First:**
+   - Verificados todos os pontos de quebra em larguras canônicas: 320px (telas ultra compactas), 375px/390px (smartphones modernos), 768px (tablets) e 1024px+ (notebooks e desktops).
+   - Ausência absoluta de rolagem horizontal indevida (`overflow-x: hidden` no body e contêineres fluidos com `width: 100%` e `max-width: 76rem`).
+   - Comportamento de toque otimizado para celulares: botões e controles interativos com área de toque mínima acessível de 44px (`min-height: 2.75rem`), sliders e abas fluidas com rolagem nativa suave.
+   - Navegação mobile gaveta (*drawer*) com bloqueio de rolagem do body quando aberta e fechamento inteligente por tecla `Escape`, clique no backdrop ou redimensionamento de janela.
+
+2. **Auditoria de Acessibilidade (WCAG AA) e Usabilidade (RNF04 e RNF02):**
+   - Adicionadas regras globais em `src/assets/main.css` para foco navegável por teclado (`:focus-visible` com anel contrastante neon e `outline-offset: 3px`).
+   - Implementado suporte obrigatório à preferência do sistema operacional para redução de movimento (`@media (prefers-reduced-motion: reduce)`), desativando ou minimizando animações e transições.
+   - Contraste visual verificado entre textos e planos de fundo (WCAG AA).
+   - Metadados semânticos completos em `index.html`: `theme-color: #100d1c`, descrição didática e título contextualizado.
+   - Entradas de formulário e botões enriquecidos com atributos semânticos, `aria-label`, `role="tablist"`, `role="tab"`, `role="region"`, `role="status"` e `role="alert"`.
+
+3. **Reestruturação e Atualização Completa da Documentação (`README.md`):**
+   - Reescreveu-se o `README.md` integralmente, elevando-o a um padrão acadêmico e profissional definitivo.
+   - Detalhamento da identidade visual de Vice City / GTA VI, stack técnica (Vue 3, Vite, Pinia, Vue Router), os 4 pilares pedagógicos de cada seção, tabela com as perguntas-guia respondidas, guia dos 3 laboratórios interativos, especificação do consumo da API Open-Meteo e memória de cálculo do Desafio Final (608px).
+   - **Matriz de Conformidade dos 15 Critérios de Aceitação do ERS:** Quadro comparativo validando o cumprimento de 100% dos requisitos exigidos.
+   - Instruções completas para execução local, teste mobile via Wi-Fi (`npm run dev -- --host`), auditoria em emuladores móveis (DevTools) e publicação na Vercel via `vercel.json`.
+
+4. **Auditoria Final de Build e Otimização:**
+   - Executado `npm run build` gerando distribuição de produção otimizada:
+     - 72 módulos transformados com sucesso em 3.63s;
+     - 0 erros e 0 warnings críticos;
+     - Chunks divididos eficientemente via *lazy-loading* de rotas com Vite (`dist/assets/*.js` e `dist/assets/*.css`).
+
+### Arquivos Criados / Modificados:
+- `src/assets/main.css` (Adicionado `:focus-visible` e `@media (prefers-reduced-motion)`)
+- `index.html` (Metadados `theme-color`, meta description e título refinado)
+- `README.md` (Documentação completa, matriz dos 15 critérios de aceitação e instruções mobile)
+- `LastProgress.md` (Atualizado via append)
+
+### Status Geral do Projeto:
+- **TODOS OS 7 PASSOS DE IMPLEMENTAÇÃO FORAM CONCLUÍDOS COM SUCESSO.**
+- A aplicação cumpre rigorosamente todos os Requisitos Funcionais (RF01 a RF14), Requisitos Não Funcionais (RNF01 a RNF09), Laboratórios (LAB01 a LAB03) e os 15 Critérios de Aceitação do `docs/ERS.md`.
