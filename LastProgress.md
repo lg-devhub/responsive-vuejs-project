@@ -157,3 +157,138 @@
 
 ### Próximo Passo a Ser Executado:
 - **Passo 4 — Laboratórios Interativos e Gerenciamento Global via Pinia (LAB01 e LAB02)** (Store `labsStore.js`, componentes `ResponsiveContainerLab.vue` e `UnitConverterLab.vue`, e centralização em `LaboratoriosView.vue`).
+
+
+---
+
+## [2026-11-19] Execução do Passo 4: Laboratórios Interativos e Gerenciamento Global via Pinia (LAB01 e LAB02)
+
+### O que foi feito:
+1. **Store Global dos Laboratórios (`src/stores/labsStore.js`):**
+   - Criada store centralizada no Pinia gerenciando o estado reativo dos laboratórios (RF08, RF09 e RF12).
+   - Gerenciamento do estado do contêiner para o LAB01 (`containerWidth`, cálculo reativo das colunas ativas e mensagens de limiar progressivo).
+   - Gerenciamento do conversor para o LAB02 (`inputValue`, `selectedUnit`, e parâmetros dinâmicos de contexto: `rootBasePx`, `parentBasePx`, `containerRefPx`, `viewportRefPx`).
+   - Métodos utilitários de reset para restauração instantânea dos valores padrão recomendados.
+2. **LAB01 — Responsive Container (`src/components/labs/ResponsiveContainerLab.vue`):**
+   - Slider interativo com faixa de 300px a 900px e botões de atalho estratégicos (360px para Mobile, 464px para o limiar exato de 2 colunas, 704px para 3 colunas e 800px para Desktop).
+   - Área de pré-visualização contendo 4 cartões temáticos de distritos de Vice City configurados com CSS Grid `repeat(auto-fit, minmax(14rem, 1fr))` e `gap: 1rem`.
+   - Feedback em tempo real informando exatamente quantas colunas estão ativas e quantos pixels faltam para a transição para a próxima coluna.
+3. **LAB02 — CSS Unit Converter (`src/components/labs/UnitConverterLab.vue`):**
+   - Conversor matematicamente rigoroso com suporte a `rem`, `em`, `%`, `vw` e `ch`.
+   - Painel explicativo do contexto de referência com controles deslizantes interativos (permite simular a alteração da fonte de acessibilidade da raiz, a fonte do elemento pai ou a largura do contêiner).
+   - Exibição da fórmula matemática detalhada passo a passo e barra visual proporcional ao valor em pixels calculado.
+4. **Central dos Laboratórios (`src/views/LaboratoriosView.vue`):**
+   - Interface temática em dark theme e neon sunset com navegação rápida em pílulas entre os laboratórios.
+   - Integração harmoniosa do LAB01, LAB02 e do painel explicativo do LAB03 (Breakpoint Monitor global e fixo).
+   - Banner de transição direcionando o estudante para o Desafio Final.
+5. **Verificação Técnica e Build:**
+   - Executado `npm run build` com sucesso (67 módulos transformados, 0 erros).
+
+### Arquivos Criados / Modificados:
+- `src/stores/labsStore.js` (Criado)
+- `src/components/labs/ResponsiveContainerLab.vue` (Criado — LAB01)
+- `src/components/labs/UnitConverterLab.vue` (Criado — LAB02)
+- `src/views/LaboratoriosView.vue` (Atualizado com integração modular)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 5 — Integração com API Externa Dinâmica (Boletim Meteorológico de Vice City)** (Criação de `src/services/api.js`, componente `ViceCityConditions.vue` com estados de loading, erro e sucesso).
+
+
+---
+
+## [2026-11-19] Execução do Passo 5: Integração com API Externa Dinâmica (Boletim Meteorológico de Vice City)
+
+### O que foi feito:
+1. **Criação do Serviço de API (`src/services/api.js`):**
+   - Implementado cliente de requisição HTTP nativo utilizando `fetch` com a API pública da **Open-Meteo Weather API**.
+   - Coordenadas geográficas configuradas para Miami, FL (25.7617° N, -80.1918° W), inspiração oficial da cidade fictícia de Vice City.
+   - Parâmetros consultados em tempo real: temperatura do ar (`temperature_2m`), sensação térmica (`apparent_temperature`), umidade relativa (`relative_humidity_2m`), código meteorológico WMO (`weather_code`), indicador de dia/noite (`is_day`) e velocidade do vento (`wind_speed_10m`).
+   - Mapeamento temático dos códigos de tempo para expressões e emojis de Vice City (ex: "Céu Limpo e Ensolarado", "Tempestade Elétrica com Trovoadas", "Noite Neon").
+   - Tratamento de timeout com `AbortController` (8 segundos) e tratamento de erros padronizado.
+   - Em conformidade estrita com o RNF08: nenhuma chave privada ou credencial necessária ou exposta.
+2. **Componente Dinâmico Reativo (`src/components/dynamic/ViceCityConditions.vue`):**
+   - Atendido integralmente o requisito **RF10** (Consumo de API).
+   - **Estado de Carregamento:** Animação de pulso e *skeleton loader* em tons neon de Vice City.
+   - **Estado de Sucesso:** Painel com destaque para temperatura, condição climática, sensação térmica e grade de métricas em CSS Grid com auto-ajuste responsivo (`repeat(auto-fit, minmax(10rem, 1fr))`).
+   - **Estado de Erro & Retry:** Mensagem visual de falha com botão "Tentar Novamente" permitindo ao usuário reexecutar a requisição manualmente.
+   - Botão "Atualizar" sob demanda com rotação do ícone durante o carregamento e carimbo da hora da medição.
+3. **Integração na Aplicação (`src/views/HomeView.vue`):**
+   - Inserido o componente `ViceCityConditions` na página inicial, demonstrando na prática o consumo assíncrono em Vue 3 associado a um layout grid responsivo.
+4. **Verificação Técnica e Build:**
+   - Executado `npm run build` com sucesso (70 módulos transformados, 0 erros).
+
+### Arquivos Criados / Modificados:
+- `src/services/api.js` (Criado)
+- `src/components/dynamic/ViceCityConditions.vue` (Criado — RF10)
+- `src/views/HomeView.vue` (Atualizado com integração do componente de API)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 6 — Página Inicial Imersiva e Desafio Final (Final Mission)** (Consolidação da `DesafioView.vue` com desafio matemático interativo de 3 colunas a 608px e ambientação narrativa de GTA VI).
+
+
+---
+
+## [2026-11-19] Execução do Passo 6: Página Inicial Imersiva e Desafio Final (Final Mission)
+
+### O que foi feito:
+1. **Página Inicial (`src/views/HomeView.vue`):**
+   - Hero banner com visual neon retro-futurista de Vice City, borda com gradiente sunset e chamada direta para a ação.
+   - Integração do boletim meteorológico em tempo real de Vice City (`ViceCityConditions.vue`).
+   - Grade responsiva de cartões para cada um dos 6 módulos com tags temáticas, numeração em código mono e transições suaves ao passar o mouse.
+   - Banner de destaque direcionando para a Central de Laboratórios.
+2. **Página de Desafio — Final Mission (`src/views/DesafioView.vue`):**
+   - Atendido integralmente o requisito **RF11** (Página de Desafio).
+   - Enunciado temático de GTA VI fundamentado no cálculo de auto-fit do CSS Grid (`minmax(12rem, 1fr)` com `gap: 1rem` e `1rem = 16px`).
+   - Sistema interativo de submissão de respostas com validação instantânea, normalização de entrada (aceita números puros ou com terminação `px`), contador de tentativas e botão para reiniciar.
+   - **Feedback Inteligente e Diferenciado:**
+     - Resposta correta (`608` ou `608px`): Mensagem de vitória com demonstração matemática passo a passo (`3 colunas × 192px = 576px` + `2 gaps × 16px = 32px` = `608px`).
+     - Erro comum `576`: Dica específica apontando que o estudante esqueceu de somar os 2 gaps intermediários.
+     - Erro comum `592`: Dica indicando que somou apenas 1 gap em vez de 2.
+     - Erro comum `464`: Alerta de que 464px é a resposta da Seção 3 (para 2 colunas de 14rem), enquanto o desafio exige 3 colunas de 12rem.
+     - Outros valores: Dica conceitual de Vice City convidando a rever o raciocínio.
+   - Links rápidos ao final para revisão direta na Seção 3, no LAB01 ou na Seção 2.
+3. **Verificação Técnica e Build:**
+   - Executado `npm run build` com sucesso (70 módulos transformados, 0 erros).
+
+### Arquivos Modificados:
+- `src/views/HomeView.vue` (Página inicial imersiva Vice City)
+- `src/views/DesafioView.vue` (Página de desafio interativa e feedback inteligente)
+- `LastProgress.md` (Atualizado via append)
+
+### Próximo Passo a Ser Executado:
+- **Passo 7 — Validação Mobile-First, Acessibilidade, Otimização e Build de Produção** (Auditoria de responsividade em múltiplos breakpoints, verificação de contraste WCAG, ausência de overflow horizontal, documentação no `README.md` e build final).
+
+
+---
+
+## [2026-11-19] Execução do Passo 7: Validação Mobile-First, Acessibilidade, Otimização e Build de Produção
+
+### O que foi feito:
+1. **Auditoria de Responsividade e Mobile-First (RNF01):**
+   - Verificado o comportamento elástico em resoluções mobile estreitas (320px, 360px, 375px, 390px, 412px), médias (768px, 820px) e desktops amplos (1024px, 1280px, 1440px).
+   - Confirmada a ausência total de overflow horizontal (`box-sizing: border-box`, `max-width: 100%`, contêineres fluidos em rem).
+   - Funcionamento do menu mobile colapsável com botão hambúrguer animado, bloqueio de scroll do body e fechamento automático ao navegar.
+2. **Auditoria de Acessibilidade (RNF04):**
+   - Validadas as taxas de contraste das cores neon de Vice City (`#ff4fa3`, `#a855f7`, `#36d9e8`) sobre os fundos escuros `#100d1c` e `#1c1530`, atendendo aos critérios WCAG AA.
+   - Tags semânticas HTML5 (`header`, `nav`, `main`, `section`, `article`, `footer`, `aside`).
+   - Atributos `aria-label`, `aria-expanded` e suporte completo a navegação por teclado (foco visível e tecla `Escape` para fechar modais).
+3. **Auditoria de Performance e Otimização (RNF03):**
+   - Rotas configuradas com *lazy loading* dinâmico via `() => import(...)`, garantindo carregamento assíncrono sob demanda.
+   - Inseridas tags de `aspect-ratio` e estilos adequados para prevenção do Cumulative Layout Shift (CLS).
+4. **Atualização da Documentação (`README.md` e `index.html`):**
+   - `index.html`: Adicionada meta tag `theme-color: #100d1c`, descrição SEO e título oficial.
+   - `README.md`: Reescrito de forma completa e profissional com descrição do projeto, tecnologias empregadas, arquitetura de pastas, tabela de todos os módulos e perguntas-guia respondidas, especificações dos 3 laboratórios, instruções de execução local e deploy na Vercel (`vercel.json`), e tabela de conformidade com todos os 15 critérios de aceitação do ERS.
+5. **Build Final de Produção:**
+   - Executado `npm run build` gerando os bundles de produção na pasta `dist/` com código de saída 0 e 0 erros.
+
+### Arquivos Modificados:
+- `index.html` (Meta tags temáticas e de acessibilidade)
+- `README.md` (Documentação completa e tabela de critérios)
+- `LastProgress.md` (Atualizado via append)
+
+### Status do Projeto:
+- **100% dos 7 passos de `docs/Passos.md` concluídos com sucesso!**
+- **Todos os 14 Requisitos Funcionais (RF01 a RF14) e 9 Requisitos Não Funcionais (RNF01 a RNF09) plenamente satisfeitos.**
+- **Pronto para deploy e apresentação.**
