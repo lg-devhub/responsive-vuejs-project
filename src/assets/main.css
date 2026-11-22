@@ -21,9 +21,14 @@ body {
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   color: var(--color-text-primary);
-  background-color: var(--color-bg);
-  background-image: var(--gradient-glow);
+  background-color: #0b0816;
+  background-image:
+    linear-gradient(180deg, rgba(11, 8, 22, 0.88) 0%, rgba(13, 10, 24, 0.94) 100%),
+    url('./img/wallpaper2.png');
   background-attachment: fixed;
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
@@ -108,50 +113,65 @@ code {
   }
 }
 
-/* Blocos de Código Pré-formatados */
+/* Blocos de Código Pré-formatados — Aparência Editor Profissional */
 .code-block {
-  background-color: var(--color-code-bg);
-  color: var(--color-code-text);
-  border: 1px solid var(--color-code-border);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
+  background-color: #080512;
+  color: #f0abfc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
   overflow-x: auto;
+  font-family: var(--font-family-code);
   font-size: var(--font-size-sm);
   margin-top: var(--spacing-sm);
-  line-height: 1.5;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+  line-height: 1.6;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.7), 0 4px 20px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.code-block::before {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, #ff4fa3 0%, #a855f7 50%, #36d9e8 100%);
+  opacity: 0.7;
 }
 
 /* Caixas de Destaque / Pergunta-Guia e Resposta */
 .question-box {
-  background-color: rgba(168, 85, 247, 0.1);
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.35);
   border-left: 4px solid var(--color-secondary);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  border-left-width: 4px;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
   margin: var(--spacing-md) 0;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(168, 85, 247, 0.12);
+  backdrop-filter: blur(8px);
 }
 
 .question-box h4 {
-  color: var(--color-secondary);
+  color: #d8b4fe;
   margin-bottom: var(--spacing-xs);
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
   font-size: var(--font-size-base);
+  font-weight: 700;
 }
 
 .answer-box {
-  background-color: rgba(54, 217, 232, 0.08);
+  background: rgba(54, 217, 232, 0.08);
+  border: 1px solid rgba(54, 217, 232, 0.35);
   border-left: 4px solid var(--color-accent);
-  border: 1px solid rgba(54, 217, 232, 0.25);
-  border-left-width: 4px;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
   margin: var(--spacing-md) 0;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(54, 217, 232, 0.12);
+  backdrop-filter: blur(8px);
 }
 
 .answer-box h4 {
@@ -161,6 +181,7 @@ code {
   align-items: center;
   gap: var(--spacing-xs);
   font-size: var(--font-size-base);
+  font-weight: 700;
 }
 
 /* Botões do Sistema com Estética Vice City */
@@ -196,43 +217,74 @@ code {
 }
 
 .btn-secondary {
-  background: var(--color-surface-light);
+  background: rgba(28, 20, 48, 0.7);
+  backdrop-filter: blur(8px);
   color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-secondary:hover {
   border-color: var(--color-accent);
   box-shadow: var(--shadow-neon-cyan);
-  color: var(--color-accent);
+  color: #ffffff;
+  background: rgba(38, 28, 64, 0.85);
+}
+
+.btn-cta {
+  background: var(--gradient-magenta-pink);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 15px rgba(255, 79, 163, 0.35);
+}
+
+.btn-cta:hover {
+  box-shadow: var(--shadow-neon-pink-lg);
+  transform: translateY(-2px) scale(1.02);
 }
 
 /* Badges e Tags */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.15rem 0.5rem;
+  padding: 0.2rem 0.65rem;
   font-size: var(--font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: var(--radius-full);
+  line-height: 1.2;
 }
 
 .badge-pink {
-  background-color: rgba(255, 79, 163, 0.15);
+  background-color: rgba(255, 79, 163, 0.18);
   color: var(--color-primary);
-  border: 1px solid rgba(255, 79, 163, 0.3);
+  border: 1px solid rgba(255, 79, 163, 0.4);
+  box-shadow: 0 0 10px rgba(255, 79, 163, 0.2);
 }
 
 .badge-cyan {
-  background-color: rgba(54, 217, 232, 0.15);
+  background-color: rgba(54, 217, 232, 0.16);
   color: var(--color-accent);
-  border: 1px solid rgba(54, 217, 232, 0.3);
+  border: 1px solid rgba(54, 217, 232, 0.4);
+  box-shadow: 0 0 10px rgba(54, 217, 232, 0.2);
 }
 
 .badge-purple {
-  background-color: rgba(168, 85, 247, 0.15);
+  background-color: rgba(168, 85, 247, 0.18);
   color: var(--color-secondary);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.badge-amber {
+  background-color: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.badge-emerald {
+  background-color: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
 }

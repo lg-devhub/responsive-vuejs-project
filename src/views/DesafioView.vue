@@ -189,16 +189,19 @@ const reiniciarDesafio = () => {
 
 <style scoped>
 .desafio-view {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .desafio-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  background: rgba(18, 12, 32, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 79, 163, 0.35);
+  border-radius: var(--radius-2xl);
   padding: var(--spacing-lg);
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 79, 163, 0.15);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -219,14 +222,14 @@ const reiniciarDesafio = () => {
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--gradient-sunset);
+  background: linear-gradient(90deg, #ff4fa3 0%, #ff7a18 50%, #36d9e8 100%);
 }
 
 .mission-header {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: var(--spacing-lg);
 }
 
@@ -237,33 +240,39 @@ const reiniciarDesafio = () => {
 }
 
 .desafio-title {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-2xl);
-  color: var(--color-text-primary);
+  font-weight: 800;
+  color: #ffffff;
   letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 @media (min-width: 48rem) {
   .desafio-title {
-    font-size: var(--font-size-3xl);
+    font-size: 2.25rem;
   }
 }
 
 .desafio-subtitle {
   font-size: var(--font-size-base);
-  color: var(--color-text-secondary);
+  color: #e2d9f3;
   line-height: 1.6;
 }
 
 /* Enunciado do Desafio */
 .enunciado-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
+  background: rgba(22, 16, 38, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(168, 85, 247, 0.35);
   border-left: 4px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
 }
 
 .enunciado-header {
@@ -277,8 +286,10 @@ const reiniciarDesafio = () => {
 }
 
 .enunciado-title {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-lg);
-  color: var(--color-text-primary);
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .enunciado-body {
@@ -291,9 +302,9 @@ const reiniciarDesafio = () => {
 }
 
 .mission-scenario {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  background: rgba(10, 7, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
@@ -301,7 +312,9 @@ const reiniciarDesafio = () => {
 }
 
 .mission-scenario h4 {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-sm);
+  font-weight: 700;
   color: var(--color-accent);
 }
 
@@ -315,35 +328,38 @@ const reiniciarDesafio = () => {
 }
 
 .question-callout {
-  background: rgba(255, 79, 163, 0.1);
-  border: 1px solid rgba(255, 79, 163, 0.35);
-  border-radius: var(--radius-md);
+  background: rgba(255, 79, 163, 0.12);
+  border: 1px solid rgba(255, 79, 163, 0.4);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  box-shadow: 0 0 15px rgba(255, 79, 163, 0.15);
 }
 
 .callout-badge {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--color-primary);
   letter-spacing: 0.05em;
 }
 
 .question-callout p {
-  color: var(--color-text-primary);
+  color: #ffffff;
   font-weight: 600;
   font-size: var(--font-size-base);
 }
 
 /* Painel de Interação */
 .interacao-card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
+  background: rgba(10, 7, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -352,6 +368,11 @@ const reiniciarDesafio = () => {
 .label-resposta {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.label-resposta strong {
+  color: #ffffff;
 }
 
 .input-action-row {
@@ -364,18 +385,18 @@ const reiniciarDesafio = () => {
 .input-container {
   display: flex;
   align-items: center;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(22, 16, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   overflow: hidden;
   flex: 1;
   min-width: 14rem;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .input-container:focus-within {
   border-color: var(--color-primary);
-  box-shadow: 0 0 10px rgba(255, 79, 163, 0.3);
+  box-shadow: 0 0 16px rgba(255, 79, 163, 0.4);
 }
 
 .input-desafio {
@@ -384,7 +405,7 @@ const reiniciarDesafio = () => {
   border: none;
   padding: 0.75rem var(--spacing-md);
   font-size: var(--font-size-lg);
-  color: var(--color-text-primary);
+  color: #ffffff;
   font-weight: 700;
   outline: none;
 }
@@ -392,7 +413,7 @@ const reiniciarDesafio = () => {
 .input-suffix {
   padding: 0 var(--spacing-md);
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: 800;
   font-size: var(--font-size-sm);
 }
 
@@ -402,20 +423,32 @@ const reiniciarDesafio = () => {
 
 .btn-validate {
   min-height: 2.75rem;
+  background: var(--gradient-magenta-pink);
+  box-shadow: 0 0 18px rgba(255, 79, 163, 0.45);
+  border-radius: var(--radius-full);
+  padding: 0.65rem 1.4rem;
+  font-weight: 700;
+}
+
+.btn-validate:hover {
+  box-shadow: 0 0 28px rgba(255, 79, 163, 0.65);
+  transform: translateY(-2px);
 }
 
 .btn-retry {
   min-height: 2.75rem;
+  border-radius: var(--radius-full);
 }
 
 /* Cartões de Feedback */
 .feedback-card {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
   animation: slideIn 0.25s ease-out;
+  backdrop-filter: blur(14px);
 }
 
 @keyframes slideIn {
@@ -430,54 +463,63 @@ const reiniciarDesafio = () => {
   gap: var(--spacing-sm);
 }
 
+.feedback-header h4 {
+  font-family: var(--font-family-heading);
+  font-weight: 800;
+}
+
 .attempts-counter {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   font-family: var(--font-family-code);
+  font-weight: 700;
 }
 
 .feedback-message {
   font-size: var(--font-size-base);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .feedback-sucesso {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
   color: #34d399;
 }
 
 .feedback-sucesso h4 {
-  color: #10b981;
+  color: #34d399;
   font-size: var(--font-size-lg);
 }
 
 .feedback-sucesso .feedback-message {
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .feedback-quase {
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
   color: #fbbf24;
 }
 
 .feedback-quase h4 {
-  color: #f59e0b;
+  color: #fbbf24;
 }
 
 .feedback-quase .feedback-message {
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .feedback-erro {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
   color: #f87171;
 }
 
 .feedback-erro h4 {
-  color: #ef4444;
+  color: #f87171;
 }
 
 .feedback-erro .feedback-message {
@@ -485,15 +527,16 @@ const reiniciarDesafio = () => {
 }
 
 .feedback-aviso {
-  background: rgba(168, 85, 247, 0.12);
-  border: 1px solid rgba(168, 85, 247, 0.35);
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
   color: var(--color-secondary);
 }
 
 .feedback-breakdown {
-  background: rgba(16, 13, 28, 0.8);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: var(--radius-md);
+  background: rgba(10, 7, 20, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   margin-top: var(--spacing-xs);
   display: flex;
@@ -502,17 +545,19 @@ const reiniciarDesafio = () => {
 }
 
 .feedback-breakdown h5 {
+  font-family: var(--font-family-heading);
   color: var(--color-accent);
   font-size: var(--font-size-sm);
+  font-weight: 700;
 }
 
 .feedback-breakdown ol {
   padding-left: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.3rem;
   font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .trophy-banner {
@@ -526,7 +571,7 @@ const reiniciarDesafio = () => {
 
 /* Dicas e Navegação */
 .dica-footer {
-  border-top: 1px dashed var(--color-border);
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
   padding-top: var(--spacing-lg);
   display: flex;
   flex-direction: column;
@@ -540,8 +585,9 @@ const reiniciarDesafio = () => {
 }
 
 .dica-header h4 {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .dica-text {
@@ -558,12 +604,13 @@ const reiniciarDesafio = () => {
 }
 
 .dica-pill {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
+  background: rgba(28, 20, 48, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 600;
-  padding: 0.4rem 0.8rem;
+  padding: 0.45rem 0.95rem;
   border-radius: var(--radius-full);
   text-decoration: none;
   transition: all var(--transition-fast);
@@ -571,7 +618,8 @@ const reiniciarDesafio = () => {
 
 .dica-pill:hover {
   border-color: var(--color-secondary);
-  color: var(--color-secondary);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
   transform: translateY(-2px);
   text-decoration: none;
 }

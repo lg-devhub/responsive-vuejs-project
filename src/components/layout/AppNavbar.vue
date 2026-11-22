@@ -61,9 +61,23 @@ onUnmounted(() => {
 <template>
   <header class="navbar" role="banner">
     <div class="navbar-container">
-      <!-- Marca do Guia / Logo Vice City -->
-      <RouterLink to="/" class="brand-link" @click="closeMenu">
-        <span class="brand-icon">🌴</span>
+      <!-- Marca do Guia / Logo GTA VI Vice City -->
+      <RouterLink to="/" class="brand-link" @click="closeMenu" aria-label="Vice City Responsive Guide — Início">
+        <div class="logo-vi-badge" aria-hidden="true">
+          <svg class="vi-svg" viewBox="0 0 46 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navViGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff4fa3" />
+                <stop offset="40%" stop-color="#d926aa" />
+                <stop offset="70%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#ff7a18" />
+              </linearGradient>
+            </defs>
+            <!-- Slanted Roman VI -->
+            <path d="M2 3 L13.5 33 L20.5 33 L30 3 L23 3 L17 23.5 L10.5 3 Z" fill="url(#navViGradient)" />
+            <path d="M34 3 L34 33 L42 33 L42 3 Z" fill="url(#navViGradient)" />
+          </svg>
+        </div>
         <div class="brand-text-group">
           <span class="brand-title">VICE CITY</span>
           <span class="brand-subtitle">RESPONSIVE GUIDE</span>
@@ -85,90 +99,150 @@ onUnmounted(() => {
         <span class="hamburger-bar"></span>
       </button>
 
-      <!-- Navegação Desktop (visível apenas em telas amplas) -->
+      <!-- Navegação Desktop Centralizada em Pílulas -->
       <nav id="primary-navigation" class="nav-desktop" aria-label="Navegação Principal Desktop">
-        <RouterLink to="/" class="nav-item">Início</RouterLink>
-        <RouterLink to="/por-que-responsividade-importa" class="nav-item">1. Responsividade</RouterLink>
-        <RouterLink to="/unidades-css" class="nav-item">2. Unidades</RouterLink>
-        <RouterLink to="/flexbox-grid" class="nav-item">3. Flex & Grid</RouterLink>
-        <RouterLink to="/imagens-responsivas" class="nav-item">4. Imagens</RouterLink>
-        <RouterLink to="/boas-praticas-vue" class="nav-item">5. Boas Práticas</RouterLink>
-        <RouterLink to="/laboratorios" class="nav-item nav-item-lab">🧪 Labs (3)</RouterLink>
-        <RouterLink to="/desafio" class="nav-item nav-item-challenge">🎯 Desafio</RouterLink>
+        <RouterLink to="/" class="nav-item nav-item--home">
+          <span class="item-icon">🏠</span>
+          <span>Início</span>
+        </RouterLink>
+        <RouterLink to="/por-que-responsividade-importa" class="nav-item">
+          <span>1. Responsividade</span>
+        </RouterLink>
+        <RouterLink to="/unidades-css" class="nav-item">
+          <span>2. Unidades</span>
+        </RouterLink>
+        <RouterLink to="/flexbox-grid" class="nav-item">
+          <span>3. Flex & Grid</span>
+        </RouterLink>
+        <RouterLink to="/imagens-responsivas" class="nav-item">
+          <span>4. Imagens</span>
+        </RouterLink>
+        <RouterLink to="/boas-praticas-vue" class="nav-item">
+          <span>5. Boas Práticas</span>
+        </RouterLink>
+        <RouterLink to="/laboratorios" class="nav-item nav-item--lab">
+          <span class="item-icon">🧪</span>
+          <span>Labs (3)</span>
+        </RouterLink>
+        <RouterLink to="/desafio" class="nav-item nav-item--challenge">
+          <span class="item-icon">⭐</span>
+          <span>Desafio</span>
+        </RouterLink>
       </nav>
     </div>
 
-    <!-- Backdrop escuro para o Menu Mobile -->
-    <Transition name="fade">
-      <div
-        v-if="isMenuOpen"
-        class="mobile-backdrop"
-        aria-hidden="true"
-        @click="closeMenu"
-      ></div>
-    </Transition>
+    <!-- Teleport para o body garante que o Backdrop e o Menu Mobile sobreponham TODOS os elementos da página -->
+    <Teleport to="body">
+      <!-- Backdrop escuro com desfoque (blur) no restante da aplicação -->
+      <Transition name="fade">
+        <div
+          v-if="isMenuOpen"
+          class="mobile-backdrop"
+          aria-hidden="true"
+          @click="closeMenu"
+        ></div>
+      </Transition>
 
-    <!-- Gaveta / Drawer de Navegação Mobile (RF03) -->
-    <Transition name="drawer">
-      <nav
-        v-if="isMenuOpen"
-        class="mobile-drawer"
-        aria-label="Navegação Principal Mobile"
-      >
-        <div class="drawer-header">
-          <span class="drawer-title">Menu de Navegação</span>
-          <span class="badge badge-pink">GTA VI Edition</span>
-        </div>
+      <!-- Gaveta / Drawer de Navegação Mobile (RF03) -->
+      <Transition name="drawer">
+        <nav
+          v-if="isMenuOpen"
+          class="mobile-drawer"
+          aria-label="Navegação Principal Mobile"
+        >
+          <div class="drawer-header">
+            <div class="drawer-brand">
+              <span class="drawer-vi-badge">VI</span>
+              <div>
+                <span class="drawer-title">VICE CITY</span>
+                <span class="drawer-sub">MENU DE NAVEGAÇÃO</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="drawer-close-btn"
+              @click="closeMenu"
+              aria-label="Fechar menu"
+            >
+              ✕
+            </button>
+          </div>
 
-        <div class="drawer-links">
-          <RouterLink to="/" class="drawer-item" @click="closeMenu">
-            <span class="item-icon">🏠</span>
-            <span>Início</span>
-          </RouterLink>
+          <div class="drawer-links">
+            <RouterLink to="/" class="drawer-item" @click="closeMenu">
+              <span class="item-icon">🏠</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Início</span>
+                <span class="drawer-item-desc">Visão geral e atmosfera Vice City</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/por-que-responsividade-importa" class="drawer-item" @click="closeMenu">
-            <span class="item-number">01</span>
-            <span>Introdução à Responsividade</span>
-          </RouterLink>
+            <RouterLink to="/por-que-responsividade-importa" class="drawer-item" @click="closeMenu">
+              <span class="drawer-num">01</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Introdução à Responsividade</span>
+                <span class="drawer-item-desc">Viewport meta tag e media queries</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/unidades-css" class="drawer-item" @click="closeMenu">
-            <span class="item-number">02</span>
-            <span>Unidades CSS (rem, em, %)</span>
-          </RouterLink>
+            <RouterLink to="/unidades-css" class="drawer-item" @click="closeMenu">
+              <span class="drawer-num">02</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Unidades CSS</span>
+                <span class="drawer-item-desc">rem, em, %, fr, vw, vh, dvh e ch</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/flexbox-grid" class="drawer-item" @click="closeMenu">
-            <span class="item-number">03</span>
-            <span>Flexbox & Grid Layout</span>
-          </RouterLink>
+            <RouterLink to="/flexbox-grid" class="drawer-item" @click="closeMenu">
+              <span class="drawer-num">03</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Flexbox & Grid Layout</span>
+                <span class="drawer-item-desc">Unidimensional vs. Bidimensional</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/imagens-responsivas" class="drawer-item" @click="closeMenu">
-            <span class="item-number">04</span>
-            <span>Imagens Responsivas & CLS</span>
-          </RouterLink>
+            <RouterLink to="/imagens-responsivas" class="drawer-item" @click="closeMenu">
+              <span class="drawer-num">04</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Imagens Responsivas & CLS</span>
+                <span class="drawer-item-desc">max-width, proporções e loading lazy</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/boas-praticas-vue" class="drawer-item" @click="closeMenu">
-            <span class="item-number">05</span>
-            <span>Boas Práticas em Vue 3</span>
-          </RouterLink>
+            <RouterLink to="/boas-praticas-vue" class="drawer-item" @click="closeMenu">
+              <span class="drawer-num">05</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Boas Práticas em Vue 3</span>
+                <span class="drawer-item-desc">Componentização, props e tokens</span>
+              </div>
+            </RouterLink>
 
-          <div class="drawer-divider"></div>
+            <div class="drawer-divider"></div>
 
-          <RouterLink to="/laboratorios" class="drawer-item drawer-item-lab" @click="closeMenu">
-            <span class="item-icon">🧪</span>
-            <span>Laboratórios Interativos (3)</span>
-          </RouterLink>
+            <RouterLink to="/laboratorios" class="drawer-item drawer-item--lab" @click="closeMenu">
+              <span class="item-icon">🧪</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Laboratórios Interativos (3)</span>
+                <span class="drawer-item-desc">Container, Unidades e Breakpoint</span>
+              </div>
+            </RouterLink>
 
-          <RouterLink to="/desafio" class="drawer-item drawer-item-challenge" @click="closeMenu">
-            <span class="item-icon">🎯</span>
-            <span>Final Mission: O Desafio</span>
-          </RouterLink>
-        </div>
+            <RouterLink to="/desafio" class="drawer-item drawer-item--challenge" @click="closeMenu">
+              <span class="item-icon">⭐</span>
+              <div class="drawer-item-content">
+                <span class="drawer-item-title">Final Mission: O Desafio</span>
+                <span class="drawer-item-desc">Enigma prático de cálculo responsivo</span>
+              </div>
+            </RouterLink>
+          </div>
 
-        <div class="drawer-footer">
-          <p class="drawer-note">Vice City Responsive Guide • 2026</p>
-        </div>
-      </nav>
-    </Transition>
+          <div class="drawer-footer">
+            <p class="drawer-note">Vice City Responsive Guide • GTA VI Theme</p>
+            <span class="badge badge-pink">Vue 3 + Vite</span>
+          </div>
+        </nav>
+      </Transition>
+    </Teleport>
   </header>
 </template>
 
@@ -177,30 +251,34 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(16, 13, 28, 0.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(13, 10, 24, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.45);
   width: 100%;
+  transition: background-color var(--transition-normal);
 }
 
 .navbar-container {
   width: 100%;
-  max-width: 76rem;
+  max-width: 82rem;
   margin: 0 auto;
-  padding: 0.75rem var(--spacing-md);
+  padding: 0.65rem var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--spacing-sm);
 }
 
-/* Marca / Logo */
+/* Marca / Logo GTA VI */
 .brand-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
   text-decoration: none;
   transition: transform var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .brand-link:hover {
@@ -208,9 +286,19 @@ onUnmounted(() => {
   text-decoration: none;
 }
 
-.brand-icon {
-  font-size: 1.5rem;
-  line-height: 1;
+.logo-vi-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.1rem;
+  filter: drop-shadow(0 0 8px rgba(255, 79, 163, 0.5));
+}
+
+.vi-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .brand-text-group {
@@ -220,25 +308,25 @@ onUnmounted(() => {
 
 .brand-title {
   font-family: var(--font-family-heading);
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   font-weight: 900;
   letter-spacing: 0.08em;
-  background: var(--gradient-sunset);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
   line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .brand-subtitle {
   font-family: var(--font-family-heading);
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.22em;
   color: var(--color-accent);
   line-height: 1;
+  text-transform: uppercase;
 }
 
-/* Navegação Desktop (Escondida por padrão - Mobile First!) */
+/* Navegação Desktop Centralizada (Visível a partir de telas médias/grandes) */
 .nav-desktop {
   display: none;
 }
@@ -248,6 +336,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     gap: 0.35rem;
+    flex-wrap: nowrap;
   }
 }
 
@@ -256,61 +345,91 @@ onUnmounted(() => {
   font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-secondary);
-  padding: 0.45rem 0.7rem;
-  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-full);
   transition: all var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid transparent;
 }
 
 .nav-item:hover {
-  color: var(--color-text-primary);
-  background-color: var(--color-surface-light);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
   text-decoration: none;
 }
 
-.nav-item.router-link-active {
+/* Item Ativo Padrão destacado em Magenta */
+.nav-item.router-link-active:not(.nav-item--lab):not(.nav-item--challenge) {
   color: #ffffff;
-  background: rgba(255, 79, 163, 0.2);
-  border: 1px solid rgba(255, 79, 163, 0.4);
-  box-shadow: 0 0 10px rgba(255, 79, 163, 0.2);
+  background: var(--gradient-magenta-pink);
+  box-shadow: 0 0 16px rgba(255, 79, 163, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
+  font-weight: 700;
 }
 
-.nav-item-lab {
+/* Pílula Especial dos Laboratórios */
+.nav-item--lab {
   color: var(--color-accent);
+  border: 1px solid rgba(54, 217, 232, 0.4);
+  background: rgba(54, 217, 232, 0.08);
 }
 
-.nav-item-lab.router-link-active {
-  background: rgba(54, 217, 232, 0.2);
-  border-color: rgba(54, 217, 232, 0.4);
+.nav-item--lab:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-neon-cyan);
   color: #ffffff;
 }
 
-.nav-item-challenge {
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: var(--color-text-primary);
+.nav-item--lab.router-link-active {
+  background: rgba(54, 217, 232, 0.25);
+  border-color: var(--color-accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-neon-cyan);
 }
 
-.nav-item-challenge.router-link-active {
-  background: var(--gradient-sunset);
-  border-color: transparent;
+/* Pílula Especial do Desafio */
+.nav-item--challenge {
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.nav-item--challenge:hover {
+  border-color: #fbbf24;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
   color: #ffffff;
 }
 
-/* Botão Hambúrguer Mobile (Visível em Mobile e Tablet) */
+.nav-item--challenge.router-link-active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(255, 79, 163, 0.3) 100%);
+  border-color: #fbbf24;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
+}
+
+.item-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* Botão Hambúrguer Mobile */
 .hamburger-btn {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 2.75rem;
   height: 2.75rem;
-  padding: 0.6rem 0.5rem;
-  background: var(--color-surface);
+  padding: 0.65rem 0.55rem;
+  background: rgba(28, 20, 48, 0.7);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
+  backdrop-filter: blur(8px);
 }
 
 @media (min-width: 64rem) {
@@ -353,29 +472,39 @@ onUnmounted(() => {
   background-color: var(--color-primary);
 }
 
-/* Backdrop escuro */
+/* Backdrop Escuro com Blur no Restante da Tela */
 .mobile-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  z-index: 190;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(8, 5, 18, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9998;
 }
 
-/* Gaveta Móvel (Drawer) */
+/* Gaveta / Drawer Mobile */
 .mobile-drawer {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(85vw, 22rem);
+  bottom: 0;
+  width: 86%;
+  max-width: 25rem;
   height: 100vh;
-  background: var(--color-surface);
-  border-left: 1px solid var(--color-border);
-  box-shadow: var(--shadow-lg), -5px 0 25px rgba(0, 0, 0, 0.7);
-  z-index: 200;
+  height: 100dvh;
+  background: rgba(16, 12, 28, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255, 79, 163, 0.35);
+  box-shadow: -10px 0 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 79, 163, 0.2);
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: var(--spacing-lg) var(--spacing-md);
 }
 
@@ -384,99 +513,157 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   padding-bottom: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: var(--spacing-md);
 }
 
-.drawer-title {
+.drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drawer-vi-badge {
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-weight: 900;
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.drawer-title {
+  display: block;
+  font-family: var(--font-family-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
   letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.drawer-sub {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.15em;
+}
+
+.drawer-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.drawer-close-btn:hover {
+  background: rgba(255, 79, 163, 0.25);
+  border-color: var(--color-primary);
+  color: #ffffff;
 }
 
 .drawer-links {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
   flex: 1;
 }
 
 .drawer-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: 0.75rem var(--spacing-sm);
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
   color: var(--color-text-secondary);
   text-decoration: none;
-  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid transparent;
+  transition: all var(--transition-fast);
 }
 
 .drawer-item:hover {
-  background: var(--color-surface-light);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   text-decoration: none;
-  transform: translateX(4px);
 }
 
 .drawer-item.router-link-active {
   background: rgba(255, 79, 163, 0.15);
-  border-color: rgba(255, 79, 163, 0.35);
-  color: var(--color-text-primary);
-  font-weight: 600;
+  border-color: rgba(255, 79, 163, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 79, 163, 0.2);
 }
 
-.item-number {
+.drawer-num {
   font-family: var(--font-family-code);
-  font-size: var(--font-size-xs);
-  color: var(--color-accent);
-  background: rgba(54, 217, 232, 0.1);
-  padding: 0.1rem 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: rgba(255, 79, 163, 0.15);
+  padding: 0.2rem 0.45rem;
   border-radius: var(--radius-sm);
-  min-width: 1.6rem;
-  text-align: center;
+  border: 1px solid rgba(255, 79, 163, 0.25);
 }
 
-.item-icon {
-  font-size: 1.1rem;
+.drawer-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-item-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.drawer-item-desc {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
 }
 
 .drawer-divider {
   height: 1px;
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.08);
   margin: var(--spacing-sm) 0;
 }
 
-.drawer-item-lab {
-  background: rgba(54, 217, 232, 0.08);
-  border-color: rgba(54, 217, 232, 0.2);
-  color: var(--color-accent);
+.drawer-item--lab {
+  border-color: rgba(54, 217, 232, 0.3);
+  background: rgba(54, 217, 232, 0.06);
 }
 
-.drawer-item-challenge {
-  background: rgba(168, 85, 247, 0.1);
-  border-color: rgba(168, 85, 247, 0.25);
-  color: var(--color-secondary);
+.drawer-item--challenge {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.06);
 }
 
 .drawer-footer {
+  margin-top: var(--spacing-lg);
   padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
-  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .drawer-note {
-  font-size: var(--font-size-xs);
+  font-size: 0.7rem;
   color: var(--color-text-muted);
 }
 
-/* Animações de Transição */
+/* Transições da Gaveta e Backdrop */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;
@@ -489,7 +676,7 @@ onUnmounted(() => {
 
 .drawer-enter-active,
 .drawer-leave-active {
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .drawer-enter-from,

@@ -94,7 +94,7 @@ const nextRoute = {
     </template>
 
     <template #code>
-      <pre class="code-block"><code>&lt;!-- Padrão Ouro da Web: Imagem Fluida, Proporção Reservada e Alta Performance --&gt;
+      <pre class="code-block" v-pre><code>&lt;!-- Padrão Ouro da Web: Imagem Fluida, Proporção Reservada e Alta Performance --&gt;
 &lt;img
   src="/images/vice-city-hero-800.webp"
   srcset="
@@ -136,56 +136,79 @@ const nextRoute = {
 .image-rules-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   margin-top: var(--spacing-md);
 }
 
 .rule-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  background: rgba(22, 16, 38, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.rule-card:hover {
+  border-color: rgba(255, 79, 163, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 0 0 16px rgba(255, 79, 163, 0.2);
 }
 
 .rule-badge {
+  align-self: flex-start;
   font-family: var(--font-family-heading);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--color-primary);
+  background: rgba(255, 79, 163, 0.16);
+  border: 1px solid rgba(255, 79, 163, 0.4);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 8px rgba(255, 79, 163, 0.2);
 }
 
 .rule-card h4 {
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .rule-card p {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .tip-card {
-  margin-top: var(--spacing-md);
-  background: rgba(255, 79, 163, 0.08);
-  border: 1px solid rgba(255, 79, 163, 0.25);
+  margin-top: var(--spacing-lg);
+  background: rgba(255, 79, 163, 0.1);
+  border: 1px solid rgba(255, 79, 163, 0.35);
+  border-left: 4px solid var(--color-primary);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), 0 0 12px rgba(255, 79, 163, 0.15);
+  backdrop-filter: blur(8px);
 }
 
 .tip-badge {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--color-primary);
+  letter-spacing: 0.05em;
 }
 
 .tip-card p {

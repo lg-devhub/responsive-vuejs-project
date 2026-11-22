@@ -60,21 +60,24 @@ onUnmounted(() => {
   bottom: 1rem;
   right: 1rem;
   z-index: 999;
-  background: rgba(28, 21, 48, 0.92);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg), 0 0 12px rgba(168, 85, 247, 0.25);
+  background: rgba(14, 10, 24, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 79, 163, 0.35);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 18px rgba(255, 79, 163, 0.2);
   font-size: var(--font-size-xs);
   color: var(--color-text-primary);
-  min-width: 13rem;
+  min-width: 14rem;
   max-width: 18rem;
   transition: all var(--transition-normal);
   user-select: none;
+  overflow: hidden;
 }
 
 .breakpoint-monitor:hover {
-  border-color: var(--color-secondary);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(54, 217, 232, 0.25);
 }
 
 .breakpoint-monitor.is-minimized {
@@ -85,11 +88,10 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
+  padding: 0.55rem 0.85rem;
   cursor: pointer;
-  background: rgba(42, 32, 66, 0.6);
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
+  background: rgba(28, 20, 48, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .monitor-title {
@@ -97,10 +99,11 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-family-heading);
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .live-pulse {
@@ -118,25 +121,26 @@ onUnmounted(() => {
 }
 
 .toggle-btn {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-muted);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   cursor: pointer;
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem 0.45rem;
   border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .toggle-btn:hover {
-  color: var(--color-text-primary);
+  color: #ffffff;
+  border-color: var(--color-accent);
 }
 
 .monitor-body {
-  padding: 0.75rem;
+  padding: 0.85rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .metric-row {
@@ -148,11 +152,14 @@ onUnmounted(() => {
 
 .metric-label {
   color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .metric-value {
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(54, 217, 232, 0.35);
 }
 
 .font-mono {
@@ -162,9 +169,9 @@ onUnmounted(() => {
 .monitor-desc {
   font-size: 0.7rem;
   color: var(--color-text-secondary);
-  border-top: 1px dashed var(--color-border);
-  padding-top: 0.4rem;
-  margin-top: 0.2rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 0.45rem;
+  margin-top: 0.25rem;
   text-align: center;
 }
 

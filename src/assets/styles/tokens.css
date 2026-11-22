@@ -31,51 +31,67 @@
   --spacing-3xl: 4rem;        /* 64px */
 
   /* Paleta Vice City / GTA VI (Dark Theme Neon) */
-  --color-bg: #100d1c;
-  --color-surface: #1c1530;
-  --color-surface-light: #2a2042;
-  --color-surface-muted: #161228;
+  --color-bg: #0d0a18;
+  --color-surface: rgba(22, 16, 38, 0.75);
+  --color-surface-light: rgba(38, 28, 64, 0.78);
+  --color-surface-muted: #130f24;
   --color-border: rgba(255, 255, 255, 0.12);
-  --color-border-glow: rgba(255, 79, 163, 0.3);
+  --color-border-glow: rgba(255, 79, 163, 0.35);
 
   /* Acentos Neon Principais */
-  --color-primary: #ff4fa3;       /* Pink Neon */
+  --color-primary: #ff4fa3;       /* Pink/Magenta Neon */
   --color-primary-hover: #ff2d92;
   --color-secondary: #a855f7;     /* Sunset Purple */
   --color-accent: #36d9e8;        /* Cyan Neon */
   --color-accent-hover: #1ac8d8;
+  --color-sunset-orange: #ff7a18; /* Sunset Orange */
   --color-warning: #f59e0b;
   --color-success: #10b981;
   --color-danger: #ef4444;
 
   /* Cores de Texto (WCAG AA Contrast) */
-  --color-text-primary: #fff5fa;
-  --color-text-secondary: #d8cfe5;
-  --color-text-muted: #b9adc9;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e2d9f3;
+  --color-text-muted: #a79cb8;
 
   /* Código */
-  --color-code-bg: #0c0915;
+  --color-code-bg: #0a0714;
   --color-code-text: #f0abfc;
   --color-code-border: rgba(168, 85, 247, 0.25);
 
   /* Gradientes Temáticos de Vice City */
   --gradient-sunset: linear-gradient(135deg, #ff4fa3 0%, #a855f7 50%, #36d9e8 100%);
   --gradient-neon: linear-gradient(90deg, #ff4fa3 0%, #36d9e8 100%);
-  --gradient-surface: linear-gradient(180deg, rgba(28, 21, 48, 0.8) 0%, rgba(16, 13, 28, 0.95) 100%);
-  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(255, 79, 163, 0.15) 0%, transparent 70%);
+  --gradient-magenta-pink: linear-gradient(135deg, #ff4fa3 0%, #d926aa 60%, #9333ea 100%);
+  --gradient-cta: linear-gradient(135deg, #ff4fa3 0%, #ff2d92 50%, #ff7a18 100%);
+  --gradient-cyan-purple: linear-gradient(135deg, #36d9e8 0%, #a855f7 100%);
+  --gradient-surface: linear-gradient(180deg, rgba(28, 20, 48, 0.8) 0%, rgba(13, 10, 24, 0.95) 100%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(255, 79, 163, 0.18) 0%, transparent 70%);
+
+  /* Glassmorphism & Efeitos GTA VI */
+  --glass-bg: rgba(20, 14, 34, 0.72);
+  --glass-bg-subtle: rgba(16, 12, 28, 0.55);
+  --glass-bg-elevated: rgba(28, 20, 48, 0.82);
+  --glass-blur: blur(16px);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-pink: rgba(255, 79, 163, 0.35);
+  --glass-border-cyan: rgba(54, 217, 232, 0.35);
 
   /* Efeitos, Bordas e Sombras */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
-  --shadow-neon-pink: 0 0 15px rgba(255, 79, 163, 0.35);
-  --shadow-neon-cyan: 0 0 15px rgba(54, 217, 232, 0.35);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.6);
+  --shadow-neon-pink: 0 0 18px rgba(255, 79, 163, 0.45);
+  --shadow-neon-pink-lg: 0 0 32px rgba(255, 79, 163, 0.55), 0 0 10px rgba(255, 79, 163, 0.35);
+  --shadow-neon-cyan: 0 0 18px rgba(54, 217, 232, 0.4);
+  --shadow-neon-cyan-lg: 0 0 32px rgba(54, 217, 232, 0.55), 0 0 10px rgba(54, 217, 232, 0.35);
 
   /* Transições Suaves */
   --transition-fast: 0.15s ease;

@@ -193,14 +193,28 @@ const labsStore = useLabsStore()
 
 <style scoped>
 .lab-block {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  background: rgba(18, 12, 32, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(54, 217, 232, 0.32);
+  border-radius: var(--radius-2xl);
   padding: var(--spacing-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(54, 217, 232, 0.12);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.lab-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #36d9e8 0%, #a855f7 100%);
 }
 
 @media (min-width: 48rem) {
@@ -223,8 +237,10 @@ const labsStore = useLabsStore()
 }
 
 .lab-title {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .lab-desc {
@@ -247,13 +263,13 @@ const labsStore = useLabsStore()
 }
 
 .input-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  background: rgba(10, 7, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .field-label {
@@ -267,63 +283,64 @@ const labsStore = useLabsStore()
 .input-wrapper {
   display: flex;
   align-items: center;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: rgba(22, 16, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .input-wrapper:focus-within {
   border-color: var(--color-accent);
-  box-shadow: 0 0 10px rgba(54, 217, 232, 0.25);
+  box-shadow: 0 0 14px rgba(54, 217, 232, 0.35);
 }
 
 .number-input {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 0.6rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   font-size: var(--font-size-lg);
   font-family: var(--font-family-code);
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: #ffffff;
   outline: none;
 }
 
 .unit-suffix {
-  padding: 0 0.75rem;
+  padding: 0 0.85rem;
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: 800;
   font-size: var(--font-size-sm);
-  background: rgba(54, 217, 232, 0.1);
+  background: rgba(54, 217, 232, 0.15);
   height: 100%;
   display: flex;
   align-items: center;
 }
 
 .unit-select {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: rgba(22, 16, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
-  padding: 0.7rem 0.75rem;
+  padding: 0.75rem 0.85rem;
   font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
+  color: #ffffff;
   outline: none;
   cursor: pointer;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .unit-select:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 14px rgba(255, 79, 163, 0.35);
 }
 
 /* Contexto Card */
 .context-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  background: rgba(10, 7, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
@@ -335,38 +352,41 @@ const labsStore = useLabsStore()
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.65rem;
 }
 
 .context-title {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .btn-reset {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btn-reset:hover {
-  color: var(--color-accent);
+  color: #ffffff;
   border-color: var(--color-accent);
+  box-shadow: var(--shadow-neon-cyan);
 }
 
 .context-item {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .context-row {
@@ -379,10 +399,14 @@ const labsStore = useLabsStore()
   color: var(--color-text-secondary);
 }
 
+.context-row strong {
+  color: #ffffff;
+}
+
 .range-slider {
   width: 100%;
-  height: 0.5rem;
-  background: var(--color-bg);
+  height: 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   outline: none;
   cursor: pointer;
@@ -397,14 +421,17 @@ const labsStore = useLabsStore()
 
 /* Resultado */
 .result-card {
-  background: rgba(16, 13, 28, 0.9);
-  border: 1px solid var(--color-border);
+  background: rgba(10, 7, 20, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(54, 217, 232, 0.35);
   border-left: 4px solid var(--color-accent);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(54, 217, 232, 0.15);
 }
 
 .result-header {
@@ -416,86 +443,96 @@ const labsStore = useLabsStore()
 }
 
 .result-title {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.05em;
 }
 
 .result-badge-value {
   display: flex;
   align-items: baseline;
-  gap: 0.25rem;
-  background: rgba(54, 217, 232, 0.15);
-  border: 1px solid rgba(54, 217, 232, 0.3);
-  padding: 0.3rem 0.8rem;
+  gap: 0.3rem;
+  background: rgba(54, 217, 232, 0.16);
+  border: 1px solid rgba(54, 217, 232, 0.45);
+  padding: 0.35rem 0.95rem;
   border-radius: var(--radius-md);
+  box-shadow: 0 0 16px rgba(54, 217, 232, 0.25);
 }
 
 .result-px {
-  font-size: var(--font-size-2xl);
-  font-weight: 800;
+  font-size: var(--font-size-3xl);
+  font-family: var(--font-family-heading);
+  font-weight: 900;
   color: var(--color-accent);
+  text-shadow: 0 0 15px rgba(54, 217, 232, 0.5);
 }
 
 .result-unit {
   font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 800;
 }
 
 .formula-box {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  background: var(--color-surface);
-  padding: 0.6rem 0.75rem;
+  gap: 0.3rem;
+  background: rgba(20, 14, 34, 0.85);
+  padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px dashed var(--color-border);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
 .formula-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--color-text-muted);
   text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .formula-code {
+  font-family: var(--font-family-code);
   font-size: var(--font-size-sm);
   color: var(--color-primary);
+  font-weight: 600;
 }
 
 .visual-bar-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
   margin-top: 0.25rem;
 }
 
 .bar-label {
   font-size: 0.7rem;
   color: var(--color-text-muted);
+  font-weight: 600;
 }
 
 .bar-track {
   width: 100%;
-  background: var(--color-surface);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  height: 1.5rem;
+  background: rgba(20, 14, 34, 0.85);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  height: 1.6rem;
   overflow: hidden;
 }
 
 .bar-fill {
   height: 100%;
-  background: var(--gradient-sunset);
+  background: linear-gradient(90deg, #ff4fa3 0%, #36d9e8 100%);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 0.5rem;
+  padding-right: 0.6rem;
   transition: width 0.2s ease-out;
-  min-width: 2rem;
+  min-width: 2.25rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px rgba(54, 217, 232, 0.3);
 }
 
 .bar-fill-text {
@@ -503,6 +540,6 @@ const labsStore = useLabsStore()
   font-family: var(--font-family-code);
   font-weight: 800;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 </style>

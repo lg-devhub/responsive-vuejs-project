@@ -82,7 +82,7 @@ const nextRoute = {
     </template>
 
     <template #code>
-      <pre class="code-block"><code>/* 1. Barra de Navegação Unidimensional com Flexbox */
+      <pre class="code-block" v-pre><code>/* 1. Barra de Navegação Unidimensional com Flexbox */
 .navbar-header {
   display: flex;
   justify-content: space-between; /* Logo na esquerda, links na direita */
@@ -152,17 +152,28 @@ const nextRoute = {
 @media (min-width: 48rem) {
   .layout-comparison-grid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
   }
 }
 
 .comparison-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  background: rgba(22, 16, 38, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.comparison-card:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 16px rgba(168, 85, 247, 0.2);
 }
 
 .comparison-header {
@@ -173,29 +184,34 @@ const nextRoute = {
 }
 
 .comparison-header h4 {
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .tech-pill {
   align-self: flex-start;
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
+  padding: 0.2rem 0.65rem;
   border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
 }
 
 .pill-purple {
-  background: rgba(168, 85, 247, 0.15);
+  background: rgba(168, 85, 247, 0.18);
   color: var(--color-secondary);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
 }
 
 .pill-cyan {
-  background: rgba(54, 217, 232, 0.15);
+  background: rgba(54, 217, 232, 0.16);
   color: var(--color-accent);
-  border: 1px solid rgba(54, 217, 232, 0.3);
+  border: 1px solid rgba(54, 217, 232, 0.45);
+  box-shadow: 0 0 10px rgba(54, 217, 232, 0.25);
 }
 
 .comparison-desc {
@@ -207,32 +223,49 @@ const nextRoute = {
   padding-left: var(--spacing-md);
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* Demonstração do Cálculo em Dark Theme */
+/* Demonstração do Cálculo em Dark Theme com Iluminação Neon */
 .calc-box {
-  margin-top: var(--spacing-md);
-  background: rgba(16, 13, 28, 0.8);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+  margin-top: var(--spacing-lg);
+  background: rgba(10, 7, 20, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(54, 217, 232, 0.35);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.7), 0 8px 25px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.calc-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-primary) 100%);
 }
 
 .calc-title {
+  font-family: var(--font-family-heading);
   color: var(--color-accent);
-  font-size: var(--font-size-base);
-  margin-bottom: var(--spacing-sm);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 0 12px rgba(54, 217, 232, 0.3);
 }
 
 .calc-steps {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.65rem;
 }
 
 .calc-step-row {
@@ -241,36 +274,38 @@ const nextRoute = {
   gap: var(--spacing-sm);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .step-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.4rem;
-  height: 1.4rem;
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(38, 28, 64, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   border-radius: 50%;
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   flex-shrink: 0;
 }
 
 .highlight-step {
-  background: rgba(54, 217, 232, 0.1);
-  border: 1px solid rgba(54, 217, 232, 0.3);
-  padding: 0.5rem;
-  border-radius: var(--radius-sm);
-  color: var(--color-text-primary);
+  background: rgba(54, 217, 232, 0.12);
+  border: 1px solid rgba(54, 217, 232, 0.4);
+  padding: 0.65rem;
+  border-radius: var(--radius-md);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(54, 217, 232, 0.15);
 }
 
 .highlight-num {
   background: var(--color-accent);
-  color: #100d1c;
+  color: #0b0816;
   border-color: transparent;
+  box-shadow: 0 0 10px var(--color-accent);
 }
 
 .step-sub {
@@ -278,9 +313,9 @@ const nextRoute = {
 }
 
 .calc-summary {
-  margin-top: 0.4rem;
-  padding-top: 0.6rem;
-  border-top: 1px dashed var(--color-border);
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   line-height: 1.6;

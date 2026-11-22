@@ -141,14 +141,28 @@ const setPresetWidth = (width) => {
 
 <style scoped>
 .lab-block {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  background: rgba(18, 12, 32, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 79, 163, 0.32);
+  border-radius: var(--radius-2xl);
   padding: var(--spacing-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 79, 163, 0.12);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.lab-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff4fa3 0%, #a855f7 100%);
 }
 
 @media (min-width: 48rem) {
@@ -171,8 +185,10 @@ const setPresetWidth = (width) => {
 }
 
 .lab-title {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .lab-desc {
@@ -183,10 +199,10 @@ const setPresetWidth = (width) => {
 
 /* Painel de Controles */
 .controls-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  background: rgba(10, 7, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
@@ -202,12 +218,14 @@ const setPresetWidth = (width) => {
 
 .slider-label {
   font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .text-neon {
-  color: var(--color-accent);
-  font-size: var(--font-size-base);
+  color: var(--color-primary);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
 }
 
 .font-mono {
@@ -215,38 +233,39 @@ const setPresetWidth = (width) => {
 }
 
 .btn-reset {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btn-reset:hover {
-  color: var(--color-text-primary);
+  color: #ffffff;
   border-color: var(--color-accent);
+  box-shadow: var(--shadow-neon-cyan);
 }
 
 /* Range Slider */
 .range-slider {
   width: 100%;
-  height: 0.5rem;
-  background: var(--color-bg);
+  height: 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   outline: none;
   cursor: pointer;
   accent-color: var(--color-primary);
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
 }
 
 /* Botões Preset */
 .preset-buttons {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -254,29 +273,33 @@ const setPresetWidth = (width) => {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   margin-right: 0.25rem;
+  font-weight: 600;
 }
 
 .preset-btn {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(28, 20, 48, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-sm);
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .preset-btn:hover {
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-neon-cyan);
 }
 
 .preset-btn.active {
-  background: var(--color-primary);
+  background: var(--gradient-magenta-pink);
   color: #ffffff;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 14px rgba(255, 79, 163, 0.5);
 }
 
 .preset-highlight {
@@ -286,27 +309,27 @@ const setPresetWidth = (width) => {
 
 /* Status Box */
 .status-box {
-  background: rgba(16, 13, 28, 0.8);
-  border: 1px solid var(--color-border);
+  background: rgba(14, 10, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 0.5rem 0.75rem;
+  padding: 0.65rem 0.95rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
 }
 
 .status-icon {
-  font-size: 1rem;
+  font-size: 1.15rem;
 }
 
 /* Área de Pré-visualização com Scroll Suave */
 .preview-wrapper {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  background: rgba(8, 5, 16, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   overflow: hidden;
 }
 
@@ -320,11 +343,12 @@ const setPresetWidth = (width) => {
   min-width: 300px;
   max-width: none;
   margin: 0 auto;
-  border: 2px dashed rgba(168, 85, 247, 0.5);
-  border-radius: var(--radius-md);
+  border: 2px dashed rgba(255, 79, 163, 0.55);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
-  background: rgba(28, 21, 48, 0.6);
+  background: rgba(22, 16, 38, 0.7);
   transition: width 0.1s ease-out;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 .container-ruler {
@@ -334,13 +358,14 @@ const setPresetWidth = (width) => {
   font-size: 0.7rem;
   color: var(--color-secondary);
   border-bottom: 1px solid rgba(168, 85, 247, 0.3);
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.35rem;
   margin-bottom: var(--spacing-md);
 }
 
 .ruler-center {
   color: var(--color-accent);
   font-weight: 700;
+  text-shadow: 0 0 8px rgba(54, 217, 232, 0.4);
 }
 
 /* Grid Real em Ação */
@@ -351,18 +376,19 @@ const setPresetWidth = (width) => {
 }
 
 .demo-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(28, 20, 48, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.3rem;
   transition: all var(--transition-fast);
 }
 
 .demo-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
 .card-tag {
@@ -374,8 +400,9 @@ const setPresetWidth = (width) => {
 }
 
 .demo-card h4 {
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .demo-card p {

@@ -1,17 +1,21 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from './components/layout/AppNavbar.vue'
 import AppFooter from './components/layout/AppFooter.vue'
 import BreakpointMonitor from './components/layout/BreakpointMonitor.vue'
+
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
 </script>
 
 <template>
-  <div class="app-container">
+  <div class="app-container" :class="{ 'is-home': isHome }">
     <!-- Navbar fixa e responsiva com menu hambúrguer para mobile -->
     <AppNavbar />
 
     <!-- Área de Conteúdo Principal -->
-    <main class="main-content" id="main-content">
+    <main class="main-content" :class="{ 'main-content--home': isHome }" id="main-content">
       <RouterView />
     </main>
 
@@ -40,8 +44,14 @@ import BreakpointMonitor from './components/layout/BreakpointMonitor.vue'
   padding: var(--spacing-lg) var(--spacing-md);
 }
 
+.main-content--home {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 @media (min-width: 48rem) {
-  .main-content {
+  .main-content:not(.main-content--home) {
     padding: var(--spacing-xl) var(--spacing-lg);
   }
 }

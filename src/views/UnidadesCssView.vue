@@ -78,7 +78,7 @@ const nextRoute = {
     </template>
 
     <template #code>
-      <pre class="code-block"><code>/* Aplicação prática e acessível de unidades */
+      <pre class="code-block" v-pre><code>/* Aplicação prática e acessível de unidades */
 :root {
   /* 1rem = 16px por padrão, mas respeita a escala de acessibilidade */
   --spacing-base: 1rem;
@@ -133,23 +133,37 @@ h1 {
 @media (min-width: 48rem) {
   .units-grid {
     grid-template-columns: 1fr 1.6fr;
+    gap: var(--spacing-lg);
   }
 }
 
 .unit-group-card {
-  background: var(--color-surface-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  background: rgba(22, 16, 38, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.unit-group-card:hover {
+  border-color: rgba(54, 217, 232, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 15px rgba(54, 217, 232, 0.15);
 }
 
 .card-group-title {
+  font-family: var(--font-family-heading);
   color: var(--color-accent);
-  font-size: var(--font-size-base);
+  font-size: 1.15rem;
+  font-weight: 700;
   margin-bottom: 0.25rem;
+  text-shadow: 0 0 10px rgba(54, 217, 232, 0.25);
 }
 
 .unit-desc {
@@ -160,36 +174,40 @@ h1 {
 .unit-item {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .unit-list {
   padding-left: var(--spacing-md);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.45rem;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .tip-card {
   margin-top: var(--spacing-md);
   background: rgba(54, 217, 232, 0.08);
-  border: 1px solid rgba(54, 217, 232, 0.25);
+  border: 1px solid rgba(54, 217, 232, 0.35);
+  border-left: 4px solid var(--color-accent);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), 0 0 12px rgba(54, 217, 232, 0.15);
+  backdrop-filter: blur(8px);
 }
 
 .tip-badge {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--color-accent);
+  letter-spacing: 0.05em;
 }
 
 .tip-card p {

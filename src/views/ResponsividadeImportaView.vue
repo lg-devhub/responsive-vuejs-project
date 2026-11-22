@@ -57,7 +57,7 @@ const nextRoute = {
     </template>
 
     <template #code>
-      <pre class="code-block"><code>&lt;!-- 1. No &lt;head&gt; do index.html: REGRA MANDATÓRIA para qualquer página responsiva --&gt;
+      <pre class="code-block" v-pre><code>&lt;!-- 1. No &lt;head&gt; do index.html: REGRA MANDATÓRIA para qualquer página responsiva --&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
 
 &lt;!-- 2. No arquivo CSS: Abordagem Mobile-First com Media Query --&gt;
@@ -99,21 +99,25 @@ const nextRoute = {
 <style scoped>
 .tip-card {
   margin-top: var(--spacing-md);
-  background: rgba(255, 79, 163, 0.08);
-  border: 1px solid rgba(255, 79, 163, 0.25);
+  background: rgba(255, 79, 163, 0.1);
+  border: 1px solid rgba(255, 79, 163, 0.35);
+  border-left: 4px solid var(--color-primary);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), 0 0 12px rgba(255, 79, 163, 0.15);
+  backdrop-filter: blur(8px);
 }
 
 .tip-badge {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--color-primary);
+  letter-spacing: 0.05em;
 }
 
 .tip-card p {
