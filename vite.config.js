@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  base: '/responsive-vuejs-project/',
   plugins: [vue()],
   resolve: {
     alias: {
